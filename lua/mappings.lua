@@ -11,46 +11,33 @@ function M.git_files()
     path = nil
   end
 
-  local width = 0.75
-  -- if path and string.find(path, "sourcegraph.*sourcegraph", 1, false) then
-  --   width = 0.5
-  -- end
-
-  local opts = themes.get_dropdown {
-    winblend = 5,
+  local opts = {
     previewer = false,
-    shorten_path = false,
-
     cwd = path,
-
-    layout_config = {
-      width = width,
-    },
   }
 
   require("telescope.builtin").git_files(opts)
 end
 
--- function M.buffer_git_files()
---   require("telescope.builtin").git_files(themes.get_dropdown {
---     cwd = vim.fn.expand "%:p:h",
---     previewer = false,
---   })
--- end
+function M.buffers()
+  require("telescope.builtin").buffers()
+end
 
-function M.live_grep()
-  local path = vim.fn.expand "%:h"
-  if path == "" then
-    path = nil
-  end
-
+function M.grep_string()
   local opts = {
-    previewer = false,
-    fzf_separator = "|>",
-    cwd = path,
+    search = vim.fn.input("Grep for > ")
   }
 
-  require("telescope.builtin").live_grep(opts)
+  require("telescope.builtin").grep_string(opts)
+end
+
+
+function M.grep_word()
+  local opts = {
+    search = vim.fn.input("<cword>")
+  }
+
+  require("telescope.builtin").grep_string(opts)
 end
 
 function M.curbuf()
@@ -98,13 +85,22 @@ function M.git_commits()
 end
 
 function M.git_branches()
-  require("telescope.builtin").git_branches({
-		attach_mappings = function(_, map)
-			map("i", "<c-d>", require("telescope.builtin").git_delete_branch)
-			map("n", "<c-d>", require("telescope.builtin").git_delete_branch)
-			return true
-		end,
-	})
+  local path = vim.fn.expand "%:h"
+  if path == "" then
+    path = nil
+  end
+
+  local opts = {
+    previewer = false,
+    cwd = path,
+    attach_mappings = function(_, map)
+      map("i", "<c-d>", require("telescope.builtin").git_delete_branch)
+   	  map("n", "<c-d>", require("telescope.builtin").git_delete_branch)
+	  return true
+	end,
+  }
+
+  require("telescope.builtin").git_branches(opts)
 end
 
 return M
