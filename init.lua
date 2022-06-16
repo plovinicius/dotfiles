@@ -285,12 +285,12 @@ vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<cr>', opts)
 
 -- Gitsigns
 vim.api.nvim_set_keymap('', '<leader>bl', ':Gitsigns blame_line<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>gg', ':Gitsigns toggle_signs<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>gi', ':Gitsigns next_hunk<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>go', ':Gitsigns prev_hunk<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>gu', ':Gitsigns reset_hunk<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>ga', ':Gitsigns stage_hunk<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>gg', ':Gitsigns toggle_signs<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>gi', ':Gitsigns next_hunk<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>go', ':Gitsigns prev_hunk<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>gu', ':Gitsigns reset_hunk<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>ga', ':Gitsigns stage_hunk<CR>', opts)
 
 -- #######################
 -- Telescope Mappings
