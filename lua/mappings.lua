@@ -31,7 +31,6 @@ function M.grep_string()
   require("telescope.builtin").grep_string(opts)
 end
 
-
 function M.grep_word()
   local opts = {
     search = vim.fn.input("<cword>")
@@ -58,6 +57,10 @@ function M.search_all_files()
     find_command = { "rg", "--no-ignore", "--files" },
     previewer = false
   }
+end
+
+function M.lsp_references()
+  require("telescope.builtin").lsp_references()
 end
 
 function M.file_browser()

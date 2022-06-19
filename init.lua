@@ -280,17 +280,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 local opts = { noremap=true, silent=true }
 local themes = require "telescope.themes"
 
--- Close current buffer
-vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<cr>', opts)
+-- Ex mode
+vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
+
+
+-- Move line to +1 line bottom
+vim.api.nvim_set_keymap('v', 'J', ":m '>+1<CR>gv=gv<CR>", opts)
+
+-- Move line to -2 line top
+vim.api.nvim_set_keymap('v', 'K', ":m '>-2<CR>gv=gv<CR>", opts)
 
 -- Gitsigns
 vim.api.nvim_set_keymap('', '<leader>bl', ':Gitsigns blame_line<CR>', opts)
--- vim.api.nvim_set_keymap('', '<leader>gg', ':Gitsigns toggle_signs<CR>', opts)
--- vim.api.nvim_set_keymap('', '<leader>gp', ':Gitsigns preview_hunk<CR>', opts)
--- vim.api.nvim_set_keymap('', '<leader>gi', ':Gitsigns next_hunk<CR>', opts)
--- vim.api.nvim_set_keymap('', '<leader>go', ':Gitsigns prev_hunk<CR>', opts)
--- vim.api.nvim_set_keymap('', '<leader>gu', ':Gitsigns reset_hunk<CR>', opts)
--- vim.api.nvim_set_keymap('', '<leader>ga', ':Gitsigns stage_hunk<CR>', opts)
 
 -- #######################
 -- Telescope Mappings
@@ -298,9 +299,6 @@ vim.api.nvim_set_keymap('', '<leader>bl', ':Gitsigns blame_line<CR>', opts)
 
 -- Git Files
 vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>lua require"mappings".git_files()<cr>', opts)
-
--- Git Buffer Files
--- vim.api.nvim_set_keymap('n', '<leader>gF', '<cmd>lua require"mappings".buffer_git_files()<cr>', opts)
 
 -- Find Files
 vim.api.nvim_set_keymap('n', '<leader>pf', '<cmd>lua require"mappings".search_all_files()<cr>', opts)
@@ -332,6 +330,9 @@ vim.api.nvim_set_keymap('n', '<leader>vh', '<cmd>lua require"mappings".help_tags
 -- LSP - Code diagnostics
 -- vim.api.nvim_set_keymap('n', '<leader>cd', '<cmd>Telescope lsp_document_diagnostics<cr>', opts)
 
+-- LSP - references
+vim.api.nvim_set_keymap('n', "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
+
 -- Git commits
 vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>lua require"mappings".git_commits()<cr>', opts)
 
@@ -346,41 +347,31 @@ vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>lua require"mappings".git_statu
 -- LSP - Mappings
 -- #######################
 
--- Note: you must pass the defined on_attach as an argument to every setup {} call and the keybindings 
--- in on_attach only take effect on buffers with an active language server.
-
-local lspconfig = require 'lspconfig'
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+local function config(_config)
+	return vim.tbl_deep_extend("force", {
+		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		on_attach = function()
+			vim.api.nvim_set_keymap('n', "gd", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
+      vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
+      -- vim.api.nvim_set_keymap('n', "<leader>vws", '<cmd> lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+      -- vim.api.nvim_set_keymap('n', "<leader>vd", '<cmd> lua vim.diagnostic.open_float()<CR>', opts)
+      -- vim.api.nvim_set_keymap('n', "[d", '<cmd> lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+      -- vim.api.nvim_set_keymap('n', "]d", '<cmd> lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+      -- vim.api.nvim_set_keymap('n', "<leader>vca", '<cmd> lua vim.lsp.buf.code_action()<CR>', opts)
+      -- vim.api.nvim_set_keymap('n', "gr", '<cmd> lua vim.lsp.buf.references()<CR>', opts) -- refereces now on telescops
+      -- vim.api.nvim_set_keymap('n', "<leader>vrn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
+      -- vim.api.nvim_set_keymap('i', "<C-h>", '<cmd> lua vim.lsp.buf.signature_help()<CR>', opts)
+		end,
+	}, _config or {})
 end
 
 
 -- #######################
 -- Harpoon - Key mappings
 -- #######################
-vim.api.nvim_set_keymap('', 'mm', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+vim.api.nvim_set_keymap('', '<C-e>', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>a', ':lua require("harpoon.mark").add_file()<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>tc', ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 
 vim.api.nvim_set_keymap('', '<leader>n', ':lua require("harpoon.ui").nav_next()<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>p', ':lua require("harpoon.ui").nav_prev()<CR>', opts)
@@ -389,12 +380,6 @@ vim.api.nvim_set_keymap('', '<leader>1', ':lua require("harpoon.ui").nav_file(1)
 vim.api.nvim_set_keymap('', '<leader>2',  ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>3',  ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>4',  ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>5',  ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>6',  ':lua require("harpoon.ui").nav_file(6)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>7',  ':lua require("harpoon.ui").nav_file(7)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>8',  ':lua require("harpoon.ui").nav_file(8)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>9',  ':lua require("harpoon.ui").nav_file(9)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>0',  ':lua require("harpoon.ui").nav_file(0)<CR>', opts)
 
 
 -- #######################
@@ -495,24 +480,32 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
--- Enable the following language servers
-local servers = { 'cssls', 'intelephense', 'tsserver' }
-
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
-
--- Example custom server
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
--- LSP - Intelephense setup
-lspconfig.intelephense.setup({
+-- LSP -Typescript server
+require("lspconfig").tsserver.setup(config())
+
+-- LSP -CSS server
+require("lspconfig").cssls.setup(config())
+
+-- LSp - GO Server
+require("lspconfig").gopls.setup(config({
+	cmd = { "gopls", "serve" },
+	settings = {
+		gopls = {
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+		},
+	},
+}))
+
+-- LSP - Intelephense PHP server
+require("lspconfig").intelephense.setup(config({
   settings = {
       intelephense = {
           stubs = {
@@ -544,35 +537,32 @@ lspconfig.intelephense.setup({
         },
       },
   }
-});
+}));
 
 
-lspconfig.sumneko_lua.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
+require("lspconfig").sumneko_lua.setup(config({
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = vim.split(package.path, ";"),
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim" },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			},
+		},
+	},
+}))
 
 -- luasnip setup
 local luasnip = require 'luasnip'
