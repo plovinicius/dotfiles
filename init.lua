@@ -128,7 +128,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Give more space for displaying messages.
-vim.opt.cmdheight = 1
+-- vim.opt.cmdheight = 1
 
 -- Dont wrap lines
 vim.opt.wrap = false
@@ -283,6 +283,8 @@ local themes = require "telescope.themes"
 -- Ex mode
 vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
 
+-- Close current buffer
+vim.api.nvim_set_keymap('n', '<leader>jk', '<cmd>:bw<CR>', opts)
 
 -- Move line to +1 line bottom
 vim.api.nvim_set_keymap('v', 'J', ":m '>+1<CR>gv=gv<CR>", opts)
