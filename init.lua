@@ -344,6 +344,9 @@ vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"mappings".git_branc
 -- Git status
 vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>lua require"mappings".git_status()<cr>', opts)
 
+-- Exit
+vim.api.nvim_set_keymap('i', '<C-c>', '<esc>', opts)
+
 
 -- #######################
 -- LSP - Mappings
