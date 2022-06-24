@@ -332,6 +332,9 @@ vim.api.nvim_set_keymap('n', '<leader>vh', '<cmd>lua require"mappings".help_tags
 -- LSP - Code diagnostics
 -- vim.api.nvim_set_keymap('n', '<leader>cd', '<cmd>Telescope lsp_document_diagnostics<cr>', opts)
 
+-- LSP - Code implementations
+vim.api.nvim_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
+
 -- LSP - references
 vim.api.nvim_set_keymap('n', "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
 
@@ -357,14 +360,13 @@ local function config(_config)
 		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function()
 			vim.api.nvim_set_keymap('n', "gd", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
-      vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
+            vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
       -- vim.api.nvim_set_keymap('n', "<leader>vws", '<cmd> lua vim.lsp.buf.workspace_symbol()<CR>', opts)
       -- vim.api.nvim_set_keymap('n', "<leader>vd", '<cmd> lua vim.diagnostic.open_float()<CR>', opts)
       -- vim.api.nvim_set_keymap('n', "[d", '<cmd> lua vim.lsp.diagnostic.goto_next()<CR>', opts)
       -- vim.api.nvim_set_keymap('n', "]d", '<cmd> lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
       -- vim.api.nvim_set_keymap('n', "<leader>vca", '<cmd> lua vim.lsp.buf.code_action()<CR>', opts)
-      -- vim.api.nvim_set_keymap('n', "gr", '<cmd> lua vim.lsp.buf.references()<CR>', opts) -- refereces now on telescops
-      -- vim.api.nvim_set_keymap('n', "<leader>vrn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
+            vim.api.nvim_set_keymap('n', "<leader>rn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
       -- vim.api.nvim_set_keymap('i', "<C-h>", '<cmd> lua vim.lsp.buf.signature_help()<CR>', opts)
 		end,
 	}, _config or {})
