@@ -1,4 +1,4 @@
--- #######################
+--k k#######################
 -- Packer and plugins
 -- #######################
 
@@ -286,14 +286,21 @@ vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
 -- Close current buffer
 vim.api.nvim_set_keymap('n', '<leader>jk', '<cmd>:bw<CR>', opts)
 
--- Move line to +1 line bottom
-vim.api.nvim_set_keymap('v', 'J', ":m '>+1<CR>gv=gv<CR>", opts)
-
--- Move line to -2 line top
-vim.api.nvim_set_keymap('v', 'K', ":m '>-2<CR>gv=gv<CR>", opts)
-
 -- Gitsigns
 vim.api.nvim_set_keymap('', '<leader>bl', ':Gitsigns blame_line<CR>', opts)
+
+-- Keeps current visual block selection after indent with '<' or '>'
+vim.api.nvim_set_keymap('i', '>', '>gv', opts)
+vim.api.nvim_set_keymap('i', '<', '<gv', opts)
+
+-- Use 'asd' on insert mode to enter on Normal Mode
+vim.api.nvim_set_keymap('i', 'asd', '<Esc>', opts)
+
+-- Move line up
+vim.api.nvim_set_keymap('n', '<Esc>k', 'ddkP', opts)
+
+-- Move line down
+vim.api.nvim_set_keymap('n', '<Esc>j', 'ddp', opts)
 
 -- #######################
 -- Telescope Mappings
@@ -398,18 +405,18 @@ vim.api.nvim_set_keymap('', '<left>', '<nop>', opts)
 vim.api.nvim_set_keymap('', '<right>', '<nop>', opts)
 
 -- Manage your windows like a boss
-vim.api.nvim_set_keymap('n', '<leader>sv', ':vsplit<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sh', ':split<CR>', opts)
-vim.api.nvim_set_keymap('n', '<up>',    ':resize +2<CR>', opts)
-vim.api.nvim_set_keymap('n', '<down>',  ':resize -2<CR>', opts)
-vim.api.nvim_set_keymap('n', '<left>',  ':vertical resize -2<CR>', opts)
-vim.api.nvim_set_keymap('n', '<right>', ':vertical resize +2<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>rr', '<C-w>r', opts)
-vim.api.nvim_set_keymap('n', '<leader>=', '<C-w>=', opts)
-vim.api.nvim_set_keymap('n', '<leader>l', ':wincmd l<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>k', ':wincmd k<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>j', ':wincmd j<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>h', ':wincmd h<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>wn', ':vsplit<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>sh', ':split<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<up>',    ':resize +2<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<down>',  ':resize -2<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<left>',  ':vertical resize -2<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<right>', ':vertical resize +2<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>rr', '<C-w>r', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>=', '<C-w>=', opts)
+vim.api.nvim_set_keymap('n', '<leader>wl', ':wincmd l<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>wk', ':wincmd k<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>wh', ':wincmd h<CR>', opts)
 
 
 -- #######################
