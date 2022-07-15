@@ -124,8 +124,8 @@ vim.o.breakindent = true
 vim.opt.undofile = true
 
 --Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+-- vim.o.ignorecase = true
+-- vim.o.smartcase = true
 
 -- Give more space for displaying messages.
 -- vim.opt.cmdheight = 1
@@ -290,8 +290,8 @@ vim.api.nvim_set_keymap('n', '<leader>jk', '<cmd>:bw<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>bl', ':Gitsigns blame_line<CR>', opts)
 
 -- Keeps current visual block selection after indent with '<' or '>'
-vim.api.nvim_set_keymap('i', '>', '>gv', opts)
-vim.api.nvim_set_keymap('i', '<', '<gv', opts)
+vim.api.nvim_set_keymap('v', '>', '>gv', opts)
+vim.api.nvim_set_keymap('v', '<', '<gv', opts)
 
 -- Use 'asd' on insert mode to enter on Normal Mode
 vim.api.nvim_set_keymap('i', 'asd', '<Esc>', opts)
