@@ -1,4 +1,4 @@
---k k#######################
+-- #######################
 -- Packer and plugins
 -- #######################
 
@@ -25,7 +25,8 @@ require('packer').startup(function(use)
     use 'nvim-telescope/telescope.nvim'
 
     -- Color scheme
-	  use { "ellisonleao/gruvbox.nvim" }
+    use { "ellisonleao/gruvbox.nvim" }
+    use "EdenEast/nightfox.nvim"
 
     --File browsing
     use 'nvim-telescope/telescope-file-browser.nvim'
@@ -140,7 +141,7 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme nightfox]])
 -- vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt to have a better completion experience
@@ -161,10 +162,10 @@ vim.o.ignorecase = true
 -- #######################
 
 -- Lualine
-local custom_gruvbox = require'lualine.themes.gruvbox'
+-- local custom_gruvbox = require'lualine.themes.gruvbox'
 
 require('lualine').setup {
-  options = { theme  = custom_gruvbox },
+  options = { theme  = "nightfox" },
 }
 
 
