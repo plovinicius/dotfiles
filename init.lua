@@ -141,8 +141,6 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme nightfox]])
--- vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -156,6 +154,20 @@ vim.o.smarttab = true
 vim.o.ignorecase = true
 -- but still want search to be smart. If i type a upper case thing, do a case
 -- sensitive blah
+
+
+-- #######################
+-- Nightfox color scheme setup
+-- #######################
+
+require('nightfox').setup({
+    options = {
+        transparent= true
+    }
+})
+
+vim.cmd([[colorscheme nightfox]])
+-- vim.cmd [[colorscheme onedark]]
 
 -- #######################
 -- Status bar setup
