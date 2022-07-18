@@ -66,7 +66,9 @@ require('packer').startup(function(use)
     use 'tpope/vim-surround'
 
     -- Comment
-    use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+    -- use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+    use 'tpope/vim-commentary'
+    use 'JoosepAlviste/nvim-ts-context-commentstring' --add comment to ts, js files
 
     -- Tree-Sitter for language highlight
     use 'nvim-treesitter/nvim-treesitter'
@@ -182,13 +184,6 @@ require('lualine').setup {
 
 
 -- #######################
--- Comment setup
--- #######################
-
-require('Comment').setup()
-
-
--- #######################
 -- Git signs setup
 -- #######################
 require('gitsigns').setup {
@@ -249,26 +244,34 @@ require("telescope").load_extension "file_browser"
 -- TreeSitter setup
 -- #######################
 
-require("nvim-treesitter.configs").setup({
-  -- To install additional languages, do: `:TSInstall <mylang>`. `:TSInstall maintained` to install all maintained
-  sync_installed = true,
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "all",
+  ignore_install = { "phpdoc" },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+  } ,
   highlight = {
-   enable = true, -- This is a MUST
-   additional_vim_regex_highlighting = { "php" },
+    enable = true, -- false will disable the whole extension
+    additional_vim_regex_highlighting = { "php" },
   },
   indent = {
-   enable = false, -- Really breaks stuff if true
+    enable = true,
   },
-  incremental_selection = {
-   enable = true,
-   keymaps = {
-    init_selection = "gnn",
-    node_incremental = "grn",
-    scope_incremental = "grc",
-    node_decremental = "grm",
-   },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
   },
-})
+}
 
 -- #######################
 -- Extra
@@ -359,8 +362,8 @@ vim.api.nvim_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opt
 vim.api.nvim_set_keymap('n', "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
 
 -- Git commits
-vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>lua require"mappings".git_commits()<cr>', opts)
 
+vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>lua require"mappings".git_commits()<cr>', opts)
 -- Git branches
 vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"mappings".git_branches()<cr>', opts)
 
@@ -369,6 +372,13 @@ vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>lua require"mappings".git_statu
 
 -- Exit
 vim.api.nvim_set_keymap('i', '<C-c>', '<esc>', opts)
+
+-- Vim commentary
+vim.api.nvim_set_keymap('n', 'gc', [[v:lua.context_commentstring.update_commentstring_and_run('Commentary')]], opts)
+vim.api.nvim_set_keymap('x', 'gc', [[v:lua.context_commentstring.update_commentstring_and_run('Commentary')]], opts)
+vim.api.nvim_set_keymap('o', 'gc', [[v:lua.context_commentstring.update_commentstring_and_run('Commentary')]], opts)
+vim.api.nvim_set_keymap('n', 'gcc', [[v:lua.context_commentstring.update_commentstring_and_run('CommentaryLine')]], opts)
+vim.api.nvim_set_keymap('n', 'cgc', [[v:lua.context_commentstring.update_commentstring_and_run('ChangeCommentary')]], opts)
 
 
 -- #######################
@@ -431,62 +441,6 @@ vim.api.nvim_set_keymap('n', '<leader>wk', ':wincmd k<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>wj', ':wincmd j<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>wh', ':wincmd h<CR>', opts)
 
-
--- #######################
--- Treesitter setup
--- #######################
-
--- Parsers must be installed manually via :TSInstall
-require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true, -- false will disable the whole extension
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
-  },
-  indent = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-  },
-}
 
 -- #######################
 -- LSP - Servers setup
