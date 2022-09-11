@@ -82,6 +82,17 @@ require('packer').startup(function(use)
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
+
+    -- LSP performant UI
+    use({
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = function()
+            local saga = require("lspsaga")
+
+            saga.init_lsp_saga()
+        end,
+    })
 end)
 
 
@@ -169,7 +180,6 @@ require('nightfox').setup({
 })
 
 vim.cmd([[colorscheme nightfox]])
--- vim.cmd [[colorscheme onedark]]
 
 -- #######################
 -- Status bar setup
@@ -294,7 +304,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Variables
 local opts = { noremap=true, silent=true }
-local themes = require "telescope.themes"
+-- local themes = require "telescope.themes"
 
 -- Ex mode
 vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
@@ -385,19 +395,45 @@ vim.api.nvim_set_keymap('n', 'cgc', [[v:lua.context_commentstring.update_comment
 -- LSP - Mappings
 -- #######################
 
+-- Lsp finder find the symbol definition implement reference
+-- when you use action in finder like open vsplit then you can
+-- use <C-t> to jump back
+vim.api.nvim_set_keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
+
+-- Code action
+vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
+vim.api.nvim_set_keymap("v", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
+
+-- Rename
+vim.api.nvim_set_keymap("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
+
+-- Peek Definition
+vim.api.nvim_set_keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts)
+
+-- Show line diagnostics
+vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
+
+-- Show cursor diagnostic
+vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts)
+
+-- Diagnsotic jump can use `<c-o>` to jump back
+vim.api.nvim_set_keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts)
+vim.api.nvim_set_keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts)
+
+-- Outline
+vim.api.nvim_set_keymap("n","<leader>o", "<cmd>LSoutlineToggle<CR>", opts)
+
+-- Hover Doc
+vim.api.nvim_set_keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
+
+
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
 		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function()
-			vim.api.nvim_set_keymap('n', "gd", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
-            vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
-      -- vim.api.nvim_set_keymap('n', "<leader>vws", '<cmd> lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-      -- vim.api.nvim_set_keymap('n', "<leader>vd", '<cmd> lua vim.diagnostic.open_float()<CR>', opts)
-      -- vim.api.nvim_set_keymap('n', "[d", '<cmd> lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-      -- vim.api.nvim_set_keymap('n', "]d", '<cmd> lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-      -- vim.api.nvim_set_keymap('n', "<leader>vca", '<cmd> lua vim.lsp.buf.code_action()<CR>', opts)
-            vim.api.nvim_set_keymap('n', "<leader>rn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
-      -- vim.api.nvim_set_keymap('i', "<C-h>", '<cmd> lua vim.lsp.buf.signature_help()<CR>', opts)
+			-- vim.api.nvim_set_keymap('n', "gd", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
+            -- vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
+            -- vim.api.nvim_set_keymap('n', "<leader>rn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
 		end,
 	}, _config or {})
 end
