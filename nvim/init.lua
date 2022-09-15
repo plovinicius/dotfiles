@@ -27,6 +27,7 @@ require('packer').startup(function(use)
     -- Color scheme
     use { "ellisonleao/gruvbox.nvim" }
     use "EdenEast/nightfox.nvim"
+    use "folke/tokyonight.nvim"
 
     --File browsing
     use 'nvim-telescope/telescope-file-browser.nvim'
@@ -103,6 +104,12 @@ end)
 -- set map leader
 vim.g.mapleader = " "
 
+-- netrw config
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
+-- vim.g.netrw_liststyle = 3
+
 --Set highlight on search
 vim.o.hlsearch = false
 
@@ -168,7 +175,6 @@ vim.o.ignorecase = true
 -- but still want search to be smart. If i type a upper case thing, do a case
 -- sensitive blah
 
-
 -- #######################
 -- Nightfox color scheme setup
 -- #######################
@@ -179,8 +185,44 @@ require('nightfox').setup({
     }
 })
 
-vim.cmd([[colorscheme nightfox]])
+require('tokyonight').setup({
+    style = "night",
+    transparent = "true",
+    on_colors = function(colors)
+        colors.errors = "#ff0000"
+    end
+})
 
+-- vim.cmd([[colorscheme nightfox]])
+vim.cmd([[colorscheme tokyonight]])
+-- vim.cmd([[colorscheme tokyonight-storm]])
+
+
+-- Colors customize
+vim.api.nvim_set_hl(0, "SignColumn", {
+    bg = "none"
+})
+
+vim.api.nvim_set_hl(0, "ColorColumn", {
+    ctermbg = 0,
+    bg = "#555555"
+})
+
+vim.api.nvim_set_hl(0, "CursorLineNR", {
+    bg = "none"
+})
+
+vim.api.nvim_set_hl(0, "Normal", {
+    bg = "none"
+})
+
+vim.api.nvim_set_hl(0, "LineNr", {
+    fg = "#5eacd3"
+})
+
+vim.api.nvim_set_hl(0, "netrwDir", {
+    fg = "#5eacd3"
+})
 -- #######################
 -- Status bar setup
 -- #######################
@@ -189,7 +231,10 @@ vim.cmd([[colorscheme nightfox]])
 -- local custom_gruvbox = require'lualine.themes.gruvbox'
 
 require('lualine').setup {
-  options = { theme  = "nightfox" },
+  options = {
+    theme = "tokyonight"
+    -- theme = "nightfox"
+  },
 }
 
 
@@ -309,6 +354,14 @@ local opts = { noremap=true, silent=true }
 -- Ex mode
 vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
 
+-- Extra
+vim.api.nvim_set_keymap('n', 'Y', 'yg$', opts)
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', opts)
+vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', opts)
+vim.api.nvim_set_keymap('n', 'J', 'mzJ`z', opts)
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', opts)
+vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', opts)
+
 -- Close current buffer
 vim.api.nvim_set_keymap('n', '<leader>jk', '<cmd>:bw<CR>', opts)
 
@@ -397,8 +450,8 @@ vim.api.nvim_set_keymap('n', 'cgc', [[v:lua.context_commentstring.update_comment
 
 -- Lsp finder find the symbol definition implement reference
 -- when you use action in finder like open vsplit then you can
--- use <C-t> to jump back
-vim.api.nvim_set_keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
+-- LSP Saga help
+vim.api.nvim_set_keymap("n", "gd", "<cmd>Lspsaga lsp_finder<CR>", opts)
 
 -- Code action
 vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
@@ -408,7 +461,7 @@ vim.api.nvim_set_keymap("v", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.api.nvim_set_keymap("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
 
 -- Peek Definition
-vim.api.nvim_set_keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts)
+vim.api.nvim_set_keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>", opts)
 
 -- Show line diagnostics
 vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
@@ -431,7 +484,7 @@ local function config(_config)
 	return vim.tbl_deep_extend("force", {
 		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function()
-			-- vim.api.nvim_set_keymap('n', "gd", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
+			-- vim.api.nvim_set_keymap('n', "gD", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
             -- vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
             -- vim.api.nvim_set_keymap('n', "<leader>rn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
 		end,
@@ -487,7 +540,7 @@ require("nvim-lsp-installer").setup {}
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
-    update_in_insert = true, 
+    update_in_insert = true,
     signs = true,
     virtual_text = true,
   }
@@ -503,7 +556,17 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 -- LSP -Typescript server
-require("lspconfig").tsserver.setup(config())
+require("lspconfig").tsserver.setup(config({
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx"
+    },
+    cmd = { "typescript-language-server", "--stdio" }
+}))
 
 -- LSP -CSS server
 require("lspconfig").cssls.setup(config())
