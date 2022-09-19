@@ -332,6 +332,13 @@ require('nvim-treesitter.configs').setup {
 -- Extra
 -- #######################
 
+-- Fixes Autocomment
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	callback = function()
+		vim.cmd("set formatoptions-=cro")
+	end,
+})
+
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -566,6 +573,18 @@ require("lspconfig").tsserver.setup(config({
         "typescript.tsx"
     },
     cmd = { "typescript-language-server", "--stdio" }
+}))
+
+-- LSP - Tailwindcss server
+require("lspconfig").tailwindcss.setup(config({
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx"
+    },
 }))
 
 -- LSP -CSS server
