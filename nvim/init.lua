@@ -63,6 +63,8 @@ require('packer').startup(function(use)
     use 'saadparwaiz1/cmp_luasnip'
     use 'williamboman/nvim-lsp-installer'
 
+    -- Prettier
+
     -- Editing
     use 'tpope/vim-surround'
 
@@ -121,6 +123,9 @@ vim.opt.swapfile = false
 
 -- Disable file backup
 vim.opt.backup = false
+
+-- Ignore node modules
+vim.opt.wildignore:append { '*/node_modules/*' }
 
 --Make line numbers default
 vim.wo.number = true
@@ -327,6 +332,10 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+-- #######################
+-- Prettier
+-- #######################
 
 -- #######################
 -- Extra
