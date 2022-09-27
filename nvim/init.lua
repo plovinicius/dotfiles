@@ -132,13 +132,13 @@ vim.wo.number = true
 vim.opt.nu = true
 
 --Scroll with some lines
-vim.opt.scrolloff = 12
+vim.opt.scrolloff = 8
 
 --Show relative line number
 vim.wo.relativenumber = true
 
 --Show color column
-vim.wo.colorcolumn = "120"
+vim.wo.colorcolumn = "80"
 
 --Enable mouse mode
 vim.o.mouse = 'a'
@@ -204,10 +204,12 @@ vim.cmd([[colorscheme tokyonight]])
 
 
 -- Colors customize
+-- Errors, warning, notice, column colors
 vim.api.nvim_set_hl(0, "SignColumn", {
     bg = "none"
 })
 
+-- Limit line colors
 vim.api.nvim_set_hl(0, "ColorColumn", {
     ctermbg = 0,
     bg = "#555555"
@@ -217,12 +219,22 @@ vim.api.nvim_set_hl(0, "CursorLineNR", {
     bg = "none"
 })
 
+-- All terminal colors
 vim.api.nvim_set_hl(0, "Normal", {
     bg = "none"
 })
 
+-- Numbers color
 vim.api.nvim_set_hl(0, "LineNr", {
-    fg = "#5eacd3"
+    fg = "#68E9B0",
+})
+
+vim.api.nvim_set_hl(0, "LineNrAbove", {
+    fg = "#5eacd3",
+})
+
+vim.api.nvim_set_hl(0, "LineNrBelow", {
+    fg = "#5eacd3",
 })
 
 vim.api.nvim_set_hl(0, "netrwDir", {
@@ -377,6 +389,7 @@ vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', opts)
 vim.api.nvim_set_keymap('n', 'J', 'mzJ`z', opts)
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', opts)
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', opts)
+vim.api.nvim_set_keymap('n', 'q', '<Nop>', opts) -- Disabled recording macro key
 
 -- Close current buffer
 vim.api.nvim_set_keymap('n', '<leader>jk', '<cmd>:bw<CR>', opts)
@@ -392,10 +405,10 @@ vim.api.nvim_set_keymap('v', '<', '<gv', opts)
 vim.api.nvim_set_keymap('i', 'asd', '<Esc>', opts)
 
 -- Move line up
-vim.api.nvim_set_keymap('n', '<Esc>k', 'ddkP', opts)
+vim.api.nvim_set_keymap('n', '<Alt>k', 'ddkP', opts)
 
 -- Move line down
-vim.api.nvim_set_keymap('n', '<Esc>j', 'ddp', opts)
+vim.api.nvim_set_keymap('n', '<Alt>j', 'ddp', opts)
 
 -- #######################
 -- Telescope Mappings
@@ -596,8 +609,13 @@ require("lspconfig").tailwindcss.setup(config({
     },
 }))
 
--- LSP -CSS server
+-- LSP - CSS server
 require("lspconfig").cssls.setup(config())
+
+-- LSP - Rust server
+require("lspconfig").rust_analyzer.setup(config({
+    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+}))
 
 -- LSp - GO Server
 require("lspconfig").gopls.setup(config({
