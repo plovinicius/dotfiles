@@ -54,9 +54,13 @@ end
 
 function M.search_all_files()
   require("telescope.builtin").find_files {
-    find_command = { "rg", "--no-ignore", "--files" },
+    -- find_command = { "rg", "--no-ignore", "--files" },
     previewer = false
   }
+end
+
+function M.git_worktree()
+  require("telescope").extensions.git_worktree.git_worktrees()
 end
 
 function M.lsp_references()

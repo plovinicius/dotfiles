@@ -38,6 +38,9 @@ require('packer').startup(function(use)
     -- Harpoon
     use 'ThePrimeagen/harpoon'
 
+    -- Git WorkTree
+    use 'ThePrimeagen/git-worktree.nvim'
+
     -- TODO Comments
     use {
       "folke/todo-comments.nvim",
@@ -405,10 +408,10 @@ vim.api.nvim_set_keymap('v', '<', '<gv', opts)
 vim.api.nvim_set_keymap('i', 'asd', '<Esc>', opts)
 
 -- Move line up
-vim.api.nvim_set_keymap('n', '<Alt>k', 'ddkP', opts)
+vim.api.nvim_set_keymap('n', '<C-k>', 'ddkP', opts)
 
 -- Move line down
-vim.api.nvim_set_keymap('n', '<Alt>j', 'ddp', opts)
+vim.api.nvim_set_keymap('n', '<C-j>', 'ddp', opts)
 
 -- #######################
 -- Telescope Mappings
@@ -433,7 +436,7 @@ vim.api.nvim_set_keymap('n', '<leader>pw', '<cmd>lua require"mappings".grep_word
 vim.api.nvim_set_keymap('n', '<leader>pt', '<cmd>lua require"mappings".file_browser()<cr>', opts)
 
 -- Color Scheme
--- vim.api.nvim_set_keymap('n', '<leader>cs', '<cmd>Telescope colorscheme<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>cs', '<cmd>Telescope colorscheme<cr>', opts)
 
 -- Current buffer fuzzy find
 vim.api.nvim_set_keymap('n', '<leader>pc', '<cmd>lua require"mappings".curbuf()<cr>', opts)
@@ -444,9 +447,6 @@ vim.api.nvim_set_keymap('n', '<leader>pb', '<cmd>lua require"mappings".buffers()
 -- Help tags
 vim.api.nvim_set_keymap('n', '<leader>vh', '<cmd>lua require"mappings".help_tags()<cr>', opts)
 
--- LSP - Code diagnostics
--- vim.api.nvim_set_keymap('n', '<leader>cd', '<cmd>Telescope lsp_document_diagnostics<cr>', opts)
-
 -- LSP - Code implementations
 vim.api.nvim_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
 
@@ -454,8 +454,11 @@ vim.api.nvim_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opt
 vim.api.nvim_set_keymap('n', "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
 
 -- Git commits
-
 vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>lua require"mappings".git_commits()<cr>', opts)
+
+-- Git WorkTree
+vim.api.nvim_set_keymap('n', '<leader>gw', '<cmd>lua require"mappings".git_worktree()<cr>', opts)
+
 -- Git branches
 vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"mappings".git_branches()<cr>', opts)
 
@@ -480,7 +483,7 @@ vim.api.nvim_set_keymap('n', 'cgc', [[v:lua.context_commentstring.update_comment
 -- Lsp finder find the symbol definition implement reference
 -- when you use action in finder like open vsplit then you can
 -- LSP Saga help
-vim.api.nvim_set_keymap("n", "gd", "<cmd>Lspsaga lsp_finder<CR>", opts)
+vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
 -- Code action
 vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
