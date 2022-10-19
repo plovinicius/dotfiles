@@ -50,6 +50,9 @@ require('packer').startup(function(use)
       end
     }
 
+    -- Indent Blankline
+    use 'lukas-reineke/indent-blankline.nvim'
+
     -- Git Signs
     use {
       'lewis6991/gitsigns.nvim',
@@ -243,6 +246,7 @@ vim.api.nvim_set_hl(0, "LineNrBelow", {
 vim.api.nvim_set_hl(0, "netrwDir", {
     fg = "#5eacd3"
 })
+
 -- #######################
 -- Status bar setup
 -- #######################
@@ -257,6 +261,14 @@ require('lualine').setup {
   },
 }
 
+-- #######################
+-- Indent blankline
+-- #######################
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+}
 
 -- #######################
 -- Git signs setup
