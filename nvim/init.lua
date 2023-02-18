@@ -74,6 +74,9 @@ require('packer').startup(function(use)
     -- Editing
     use 'tpope/vim-surround'
 
+    -- Bufferline/tabs
+    use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+
     -- Comment
     -- use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
     use 'tpope/vim-commentary'
@@ -102,6 +105,17 @@ require('packer').startup(function(use)
             saga.init_lsp_saga()
         end,
     })
+
+    -- File Explorer
+    use {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+        }
+    }
 end)
 
 
@@ -246,6 +260,11 @@ vim.api.nvim_set_hl(0, "LineNrBelow", {
 vim.api.nvim_set_hl(0, "netrwDir", {
     fg = "#5eacd3"
 })
+
+-- #######################
+-- Bufferline setp
+-- #######################
+require("bufferline").setup{}
 
 -- #######################
 -- Status bar setup
@@ -430,34 +449,31 @@ vim.api.nvim_set_keymap('n', '<C-j>', 'ddp', opts)
 -- #######################
 
 -- Git Files
-vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>lua require"mappings".git_files()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fp', '<cmd>lua require"mappings".git_files()<cr>', opts)
 
 -- Find Files
-vim.api.nvim_set_keymap('n', '<leader>pf', '<cmd>lua require"mappings".search_all_files()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fd', '<cmd>lua require"mappings".find_files()<cr>', opts)
+
+-- Find All Files
+vim.api.nvim_set_keymap('n', '<leader>fi', '<cmd>lua require"mappings".search_all_files()<cr>', opts)
 
 -- Grep String
 vim.api.nvim_set_keymap('n', '<leader>ps', '<cmd>lua require"mappings".grep_string()<cr>', opts)
 
--- Grep Word
-vim.api.nvim_set_keymap('n', '<leader>pw', '<cmd>lua require"mappings".grep_word()<cr>', opts)
-
--- Search live grep
--- vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>lua require"mappings".live_grep()<cr>', opts)
-
 -- File Browser
-vim.api.nvim_set_keymap('n', '<leader>pt', '<cmd>lua require"mappings".file_browser()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fe', '<cmd>lua require"mappings".file_browser()<cr>', opts)
 
 -- Color Scheme
 vim.api.nvim_set_keymap('n', '<leader>cs', '<cmd>Telescope colorscheme<cr>', opts)
 
 -- Current buffer fuzzy find
-vim.api.nvim_set_keymap('n', '<leader>pc', '<cmd>lua require"mappings".curbuf()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require"mappings".curbuf()<cr>', opts)
 
 -- Buffers
-vim.api.nvim_set_keymap('n', '<leader>pb', '<cmd>lua require"mappings".buffers()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require"mappings".buffers()<cr>', opts)
 
 -- Help tags
-vim.api.nvim_set_keymap('n', '<leader>vh', '<cmd>lua require"mappings".help_tags()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require"mappings".help_tags()<cr>', opts)
 
 -- LSP - Code implementations
 vim.api.nvim_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
@@ -502,7 +518,7 @@ vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.api.nvim_set_keymap("v", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 
 -- Rename
-vim.api.nvim_set_keymap("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts)
 
 -- Peek Definition
 vim.api.nvim_set_keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>", opts)
@@ -539,7 +555,7 @@ end
 -- #######################
 -- Harpoon - Key mappings
 -- #######################
-vim.api.nvim_set_keymap('', '<C-e>', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>e', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>a', ':lua require("harpoon.mark").add_file()<CR>', opts)
 vim.api.nvim_set_keymap('', '<leader>tc', ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 
