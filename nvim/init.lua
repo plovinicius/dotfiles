@@ -102,7 +102,7 @@ require('packer').startup(function(use)
         config = function()
             local saga = require("lspsaga")
 
-            saga.init_lsp_saga()
+            saga.setup()
         end,
     })
 
@@ -542,7 +542,7 @@ vim.api.nvim_set_keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function()
 			-- vim.api.nvim_set_keymap('n', "gD", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
             -- vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
@@ -608,7 +608,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
@@ -697,7 +697,7 @@ require("lspconfig").intelephense.setup(config({
 }));
 
 
-require("lspconfig").sumneko_lua.setup(config({
+require("lspconfig").lua_ls.setup(config({
 	settings = {
 		Lua = {
 			runtime = {
