@@ -36,7 +36,7 @@ require('packer').startup(function(use)
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
     -- Harpoon
-    use 'ThePrimeagen/harpoon'
+    -- use 'ThePrimeagen/harpoon'
 
     -- Git WorkTree
     use 'ThePrimeagen/git-worktree.nvim'
@@ -108,13 +108,11 @@ require('packer').startup(function(use)
 
     -- File Explorer
     use {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
+        'nvim-tree/nvim-tree.lua',
         requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",
-        }
+            'nvim-tree/nvim-web-devicons', -- optional, for file icons
+        },
+        tag = 'nightly' -- optional, updated every week. (see issue #1193)
     }
 end)
 
@@ -127,6 +125,8 @@ end)
 vim.g.mapleader = " "
 
 -- netrw config
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
@@ -264,7 +264,57 @@ vim.api.nvim_set_hl(0, "netrwDir", {
 -- #######################
 -- Bufferline setp
 -- #######################
-require("bufferline").setup{}
+-- require("bufferline").setup{}
+require('bufferline').setup {
+    options = {
+        mode = "buffers", -- set to "tabs" to only show tabpages instead
+        numbers = "none", -- "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string
+        close_command = "bdelete! %d",       -- can be a string | function, see "Mouse actions"
+        indicator = {
+            -- icon = '▎', -- this should be omitted if indicator style is not 'icon'
+            style = 'underline' -- 'icon' | 'underline' | 'none',
+        },
+        buffer_close_icon = '',
+        modified_icon = '●',
+        close_icon = '',
+        left_trunc_marker = '',
+        right_trunc_marker = '',
+        max_name_length = 18,
+        max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
+        truncate_names = true, -- whether or not tab names should be truncated
+        tab_size = 18,
+        diagnostics = false, -- | "nvim_lsp" | "coc"
+        diagnostics_update_in_insert = false,
+        offsets = {
+            {
+                filetype = "NvimTree",
+                text = "File Explorer", -- | function
+                text_align = "left", -- | "center" | "right"
+                separator = true
+            }
+        },
+        color_icons = true, -- true | false, -- whether or not to add the filetype icon highlights
+        show_buffer_icons = true, -- true | false, -- disable filetype icons for buffers
+        show_buffer_close_icons = false, -- true | false,
+        show_buffer_default_icon = true, -- true | false, -- whether or not an unrecognised filetype should show a default icon
+        show_close_icon = false, -- true | false,
+        show_tab_indicators = true, -- true | false,
+        show_duplicate_prefix =  true, -- true | false, -- whether to show duplicate buffer prefix
+        persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+        -- can also be a table containing 2 custom separators
+        -- [focused and unfocused]. eg: { '|', '|' }
+        separator_style = "thin", -- "slant" | "thick" | "thin" | { 'any', 'any' },
+        enforce_regular_tabs = false, -- false | true,
+        always_show_bufferline = true, -- true | false,
+        hover = {
+            enabled = true,
+            delay = 200,
+            reveal = {'close'}
+        },
+        sort_by = 'insert_at_end'
+    }
+}
+
 
 -- #######################
 -- Status bar setup
@@ -279,6 +329,18 @@ require('lualine').setup {
     -- theme = "nightfox"
   },
 }
+
+-- #######################
+-- NvimTree - setup
+-- #######################
+require('nvim-tree').setup({
+    view = {
+        width = 35,
+    },
+    renderer = {
+        highlight_opened_files = 'name'
+    },
+})
 
 -- #######################
 -- Indent blankline
@@ -414,7 +476,7 @@ local opts = { noremap=true, silent=true }
 -- local themes = require "telescope.themes"
 
 -- Ex mode
-vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>pv', '<cmd>Ex<CR>', opts)
 
 -- Extra
 vim.api.nvim_set_keymap('n', 'Y', 'yg$', opts)
@@ -543,29 +605,45 @@ vim.api.nvim_set_keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
 		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-		on_attach = function()
+		-- on_attach = function()
 			-- vim.api.nvim_set_keymap('n', "gD", '<cmd> lua vim.lsp.buf.definition()<CR>', opts)
             -- vim.api.nvim_set_keymap('n', "K", '<cmd> lua vim.lsp.buf.hover()<CR>', opts)
             -- vim.api.nvim_set_keymap('n', "<leader>rn", '<cmd> lua vim.lsp.buf.rename()<CR>', opts)
-		end,
+		-- end,
 	}, _config or {})
 end
 
+-- #######################
+-- NvimTree - Key mappings
+-- #######################
+vim.api.nvim_set_keymap('', '<leader>e', ':NvimTreeToggle<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>o', ':NvimTreeFocus<CR>', opts)
 
 -- #######################
 -- Harpoon - Key mappings
 -- #######################
-vim.api.nvim_set_keymap('', '<leader>e', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>a', ':lua require("harpoon.mark").add_file()<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>tc', ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>e', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>a', ':lua require("harpoon.mark").add_file()<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>tc', ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 
-vim.api.nvim_set_keymap('', '<leader>n', ':lua require("harpoon.ui").nav_next()<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>p', ':lua require("harpoon.ui").nav_prev()<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>n', ':lua require("harpoon.ui").nav_next()<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>p', ':lua require("harpoon.ui").nav_prev()<CR>', opts)
 
-vim.api.nvim_set_keymap('', '<leader>1', ':lua require("harpoon.ui").nav_file(1)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>2',  ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>3',  ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
-vim.api.nvim_set_keymap('', '<leader>4',  ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>1', ':lua require("harpoon.ui").nav_file(1)<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>2',  ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>3',  ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
+-- vim.api.nvim_set_keymap('', '<leader>4',  ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
+
+
+-- #######################
+-- Bufferline - Key mappings
+-- #######################
+-- TODO: use a function to map
+vim.api.nvim_set_keymap('', '<leader>1', ':lua require("bufferline").go_to_buffer(1, true)<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>2', ':lua require("bufferline").go_to_buffer(2, true)<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>3', ':lua require("bufferline").go_to_buffer(3, true)<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>4', ':lua require("bufferline").go_to_buffer(4, true)<CR>', opts)
+vim.api.nvim_set_keymap('', '<leader>5', ':lua require("bufferline").go_to_buffer(5, true)<CR>', opts)
 
 
 -- #######################
