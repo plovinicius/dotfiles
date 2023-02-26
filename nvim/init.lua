@@ -338,6 +338,11 @@ require('nvim-tree').setup({
         width = 35,
     },
     renderer = {
+        icons = {
+            show = {
+                git = false
+            },
+        },
         highlight_opened_files = 'name'
     },
 })
