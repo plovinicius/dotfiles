@@ -13,7 +13,7 @@ function M.git_files()
   -- end
 
   local opts = {
-    previewer = true,
+    -- previewer = true,
     -- cwd = path,
   }
 
@@ -52,9 +52,7 @@ function M.search_all_files()
 end
 
 function M.find_files()
-  require("telescope.builtin").find_files {
-    previewer = true
-  }
+  require("telescope.builtin").find_files()
 end
 
 function M.project_search()

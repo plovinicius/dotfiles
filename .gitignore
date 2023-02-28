@@ -1,2 +1,5 @@
 plugin/
 undodir/
+iterm2/
+configstore/
+.DS_Store
