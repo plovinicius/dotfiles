@@ -1,1 +1,8 @@
-VIM="nvim"
+# VIM="nvim"
+alias sourcevim='source ~/.config/nvim/init.lua'
+alias dockerstop='docker stop $(docker ps -a -q)'
+alias dockerup='docker compose up -d'
+alias vim='nvim'
+alias apachestop='sudo systemctl stop apache2'
+alias apachestatus='sudo systemctl status apache2'
+alias fd='fdfind'
