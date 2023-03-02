@@ -1,5 +1,6 @@
 # VIM="nvim"
 alias sourcevim='source ~/.config/nvim/init.lua'
+alias vconf='cd ~/.config/nvim; nvim .'
 alias dockerstop='docker stop $(docker ps -a -q)'
 alias dockerup='docker compose up -d'
 alias vim='nvim'
