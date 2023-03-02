@@ -516,22 +516,19 @@ vim.api.nvim_set_keymap('n', '<C-j>', 'ddp', opts)
 -- #######################
 
 -- Git Files
-vim.api.nvim_set_keymap('n', '<leader>fp', '<cmd>lua require"mappings".git_files()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>lua require"mappings".git_files()<cr>', opts)
+
+-- Project search
+vim.api.nvim_set_keymap('n', '<leader>fp', '<cmd>lua require"mappings".project_search()<cr>', opts)
 
 -- Find Files
 vim.api.nvim_set_keymap('n', '<leader>fd', '<cmd>lua require"mappings".find_files()<cr>', opts)
 
 -- Find All Files
-vim.api.nvim_set_keymap('n', '<leader>fi', '<cmd>lua require"mappings".search_all_files()<cr>', opts)
-
--- Grep String
-vim.api.nvim_set_keymap('n', '<leader>ps', '<cmd>lua require"mappings".grep_string()<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>lua require"mappings".live_grep()<cr>', opts)
 
 -- File Browser
 vim.api.nvim_set_keymap('n', '<leader>fe', '<cmd>lua require"mappings".file_browser()<cr>', opts)
-
--- Color Scheme
-vim.api.nvim_set_keymap('n', '<leader>cs', '<cmd>Telescope colorscheme<cr>', opts)
 
 -- Current buffer fuzzy find
 vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require"mappings".curbuf()<cr>', opts)

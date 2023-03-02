@@ -45,21 +45,21 @@ function M.help_tags()
   }
 end
 
-function M.search_all_files()
-  require("telescope.builtin").find_files {
-    find_command = { "rg", "--no-ignore", "--files" },
-  }
-end
+-- function M.search_all_files()
+--   require("telescope.builtin").find_files {
+--     find_command = { "rg", "--no-ignore", "--files" },
+--   }
+-- end
 
 function M.find_files()
   require("telescope.builtin").find_files()
 end
 
-function M.project_search()
-  require("telescope.builtin").find_files {
+function M.live_grep()
+  require("telescope.builtin").live_grep {
+    -- shorten_path = true,
     previewer = false,
-    layout_strategy = "vertical",
-    cwd = require("nvim_lsp.util").root_pattern ".git"(vim.fn.expand "%:p"),
+    fzf_separator = "|>",
   }
 end
 
