@@ -53,6 +53,8 @@ packer.startup(function(use)
         }
     }
     use 'glepnir/lspsaga.nvim' -- LSP UIs
+    use 'christoomey/vim-tmux-navigator' -- tmux split window navigation
+    use 'szw/vim-maximizer' -- toggle maximizes current window
     -- use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
     -- use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in LSP
     -- use 'hrsh7th/nvim-cmp' -- Completion

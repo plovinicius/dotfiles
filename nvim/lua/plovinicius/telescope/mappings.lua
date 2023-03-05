@@ -13,6 +13,7 @@ function M.edit_neovim()
         prompt_title = "~ dotfiles ~",
         shorten_path = false,
         cwd = "~/.config/nvim",
+        previewer = false,
   
         layout_strategy = "flex",
         layout_config = {
@@ -48,15 +49,16 @@ end
 -- Edit ZSH config file
 function M.edit_zsh()
     builtin.find_files {
-      shorten_path = false,
-      cwd = "~/.config/zsh/",
-      prompt = "~ dotfiles ~",
-      hidden = true,
+        shorten_path = false,
+        cwd = "~/.config/zsh/",
+        prompt = "~ dotfiles ~",
+        hidden = true,
+        previewer = false,
   
-      layout_strategy = "horizontal",
-      layout_config = {
+        layout_strategy = "horizontal",
+        layout_config = {
             preview_width = 0.55,
-      },
+        },
     }
 end
 

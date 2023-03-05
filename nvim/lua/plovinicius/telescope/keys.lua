@@ -16,11 +16,11 @@ map('n', '<space>gw', '<cmd>lua require"plovinicius.telescope.mappings".grep_str
 map('n', '<leader>fg', '<cmd>lua require"plovinicius.telescope.mappings".git_files()<cr>', opts)
 map('n', '<leader>fd', '<cmd>lua require"plovinicius.telescope.mappings".find_files()<cr>', opts)
 map('n', '<leader>fe', '<cmd>lua require"plovinicius.telescope.mappings".file_browser()<cr>', opts)
-map('n', '<leader>fs', '<cmd>lua require"plovinicius.telescope.mappings".live_grep()<cr>', opts)
+map('n', '<leader>lg', '<cmd>lua require"plovinicius.telescope.mappings".live_grep()<cr>', opts)
 
 -- Nvim
 map('n', '<leader>fo', '<cmd>lua require"plovinicius.telescope.mappings".buffers()<cr>', opts)
-map('n', '<leader>fp', '<cmd>lua require"plovinicius.telescope.mappings".curbuf()<cr>', opts)
+map('n', '<leader>fs', '<cmd>lua require"plovinicius.telescope.mappings".curbuf()<cr>', opts)
 map('n', '<space>vo', '<cmd>lua require"plovinicius.telescope.mappings".vim_options()<cr>', opts)
 map('n', '<space>ts', '<cmd>lua require"plovinicius.telescope.mappings".treesitter()<cr>', opts)
 

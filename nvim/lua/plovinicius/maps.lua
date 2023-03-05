@@ -10,30 +10,44 @@ keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
 
 -- Delete a word backwards -- TODO: check this
-keymap.set('n', 'dw', 'vb"_d')
+-- keymap.set('n', 'dw', 'vb"_d')
 
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
--- New tab -- TODO: check this
--- keymap.set('n', 'te', ':tabedit')
+-- Delete character but not put in the undo buffer
+keymap.set('n', 'x', '"_x')
+
+-- Remove highlighted texts front /<word>
+keymap.set('n', '<leader>nh', ':nohl<CR>')
+
+-- Tab management
+keymap.set('n', '<leader>to', ':tabnew<CR>')
+keymap.set('n', '<leader>t.', ':tabclose<CR>')
+keymap.set('n', '<leader>tn', ':tabn<CR>')
+keymap.set('n', '<leader>tp', ':tabp<CR>')
 
 -- Split window
-keymap.set('n', 'sn', ':split<Return><C-w>w')
-keymap.set('n', 'sv', ':vsplit<Return><C-w>w')
+keymap.set('n', '<leader>s-', ':split<Return><C-w>w')
+keymap.set('n', '<leader>s=', ':vsplit<Return><C-w>w')
+keymap.set('n', '<leader>se', '<C-w>=')
+keymap.set('n', '<leader>s.', ':close<CR>')
+
+-- vim-maximizer
+keymap.set('n', '<leader>sm', ':MaximizerToggle<CR>')
 
 -- Move window
-keymap.set('n', 'sf', '<C-w>w')
-keymap.set('', 'sh', '<C-w>h')
-keymap.set('', 'sk', '<C-w>k')
-keymap.set('', 'sj', '<C-w>j')
-keymap.set('', 'sl', '<C-w>l')
+-- keymap.set('n', 'sf', '<C-w>w')
+-- keymap.set('', 'sh', '<C-w>h')
+-- keymap.set('', 'sk', '<C-w>k')
+-- keymap.set('', 'sj', '<C-w>j')
+-- keymap.set('', 'sl', '<C-w>l')
 
 -- Resize window
-keymap.set('n', '<C-w><left>', '<C-w><')
-keymap.set('n', '<C-w><right>', '<C-w>>')
-keymap.set('n', '<C-w><up>', '<C-w>+')
-keymap.set('n', '<C-w><down>', '<C-w>-')
+-- keymap.set('n', '<C-w><left>', '<C-w><')
+-- keymap.set('n', '<C-w><right>', '<C-w>>')
+-- keymap.set('n', '<C-w><up>', '<C-w>+')
+-- keymap.set('n', '<C-w><down>', '<C-w>-')
 
 
 -- ////////////
@@ -56,15 +70,15 @@ map('n', 'J', 'mzJ`z', opts)
 map('n', 'q', '<Nop>', opts)
 
 -- Close current buffer
-map('n', '<leader>w', '<cmd>:bw<CR>', opts)
+map('n', '<leader>.', '<cmd>:bw<CR>', opts)
 
 -- Keeps current visual block selection after indent with '<' or '>'
 map('v', '>', '>gv', opts)
 map('v', '<', '<gv', opts)
 
 -- Move line
-map('n', '<C-k>', 'ddkP', opts)
-map('n', '<C-j>', 'ddp', opts)
+-- map('n', '<C-k>', 'ddkP', opts)
+-- map('n', '<C-j>', 'ddp', opts)
 
 -- Move text up and down on visual mode
 map("v", "<A-j>", "<Esc><cmd>m .+1<CR>==gi", opts)
