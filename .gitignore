@@ -1,4 +1,4 @@
-plugin/
+nvim/plugin/
 undodir/
 iterm2/
 configstore/
