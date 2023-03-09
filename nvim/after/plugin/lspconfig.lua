@@ -24,23 +24,19 @@ table.insert(runtime_path, 'lua/?/init.lua')
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
 		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-		on_attach = function()
-			local opts = {buffer = bufnr, remap = false}
-            -- local opts = {
-            --     noremap = true,
-            --     silent = true,
-            -- }
-
-            vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-            vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
-            vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-
-            vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-            vim.keymap.set("n", "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
-            vim.keymap.set("n", "gi", '<cmd>lua require"mappings".lsp_implementations()<CR>', opts)
-            vim.keymap.set("n", "<leader>cr", function() vim.lsp.buf.rename() end, opts)
-		end,
+        on_attach = on_attach
 	}, _config or {})
+end
+
+local on_attach = function(client, bufnr)
+    local opts = {buffer = bufnr, remap = false}
+    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+    vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+    -- vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+    -- vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
+    vim.keymap.set("n", "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
+    vim.keymap.set("n", "gi", '<cmd>lua require"mappings".lsp_implementations()<CR>', opts)
+    -- vim.kenmap.set("n", "<leader>cr", function() vim.lsp.buf.rename() end, opts)
 end
 
 -- LSP -Typescript server
@@ -74,6 +70,11 @@ lsp.cssls.setup(config())
 -- LSP - Rust server
 lsp.rust_analyzer.setup(config({
     cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+    on_attach = on_attach,
+    -- Server-specific settings...
+    settings = {
+      ["rust-analyzer"] = {}
+    }
 }))
 
 -- LSP - Intelephense PHP server

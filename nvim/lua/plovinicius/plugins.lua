@@ -33,7 +33,18 @@ packer.startup(function(use)
     use 'saadparwaiz1/cmp_luasnip'
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
-    use 'glepnir/lspsaga.nvim' -- LSP UIs
+    use({ -- LSP UIs
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = function()
+            require("lspsaga").setup({})
+        end,
+        requires = {
+            {"nvim-tree/nvim-web-devicons"},
+            --Please make sure you install markdown and markdown_inline parser
+            {"nvim-treesitter/nvim-treesitter"}
+        }
+    })
     use 'christoomey/vim-tmux-navigator' -- tmux split window navigation
     use 'szw/vim-maximizer' -- toggle maximizes current window
     use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words

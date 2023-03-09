@@ -101,3 +101,10 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 -- map("n", "<leader>pcf", "<cmd>call PhpCsFixerFixFile()<cr>", opts)
 
 require("plovinicius.telescope.keys")
+
+-- LSPsaga
+vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
+vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts)
+vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
+vim.keymap.set("v", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
