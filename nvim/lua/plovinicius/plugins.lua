@@ -30,36 +30,16 @@ packer.startup(function(use)
         'lewis6991/gitsigns.nvim', -- Git blame and other things
         requires = 'nvim-lua/plenary.nvim'
     }
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v1.x',
-        requires = {
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'},
-  
-            -- Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-buffer'},
-            {'hrsh7th/cmp-path'},
-            {'saadparwaiz1/cmp_luasnip'},
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-nvim-lua'},
-  
-            -- Snippets
-            {'L3MON4D3/LuaSnip'},
-            {'rafamadriz/friendly-snippets'},
-        }
-    }
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/nvim-lsp-installer'
     use 'glepnir/lspsaga.nvim' -- LSP UIs
     use 'christoomey/vim-tmux-navigator' -- tmux split window navigation
     use 'szw/vim-maximizer' -- toggle maximizes current window
-    -- use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
-    -- use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in LSP
-    -- use 'hrsh7th/nvim-cmp' -- Completion
-    -- use 'hrsh7th/cmp-path'
-    -- use 'L3MON4D3/LuaSnip'
+    use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
+    use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in LSP
+    use 'hrsh7th/nvim-cmp' -- Completion
+    use 'hrsh7th/cmp-path'
+    use 'L3MON4D3/LuaSnip'
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'JoosepAlviste/nvim-ts-context-commentstring'
