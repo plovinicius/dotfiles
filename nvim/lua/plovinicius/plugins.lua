@@ -30,6 +30,7 @@ packer.startup(function(use)
         'lewis6991/gitsigns.nvim', -- Git blame and other things
         requires = 'nvim-lua/plenary.nvim'
     }
+    use 'saadparwaiz1/cmp_luasnip'
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'glepnir/lspsaga.nvim' -- LSP UIs
@@ -43,6 +44,7 @@ packer.startup(function(use)
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'JoosepAlviste/nvim-ts-context-commentstring'
+    use 'simrat39/rust-tools.nvim'
     -- use 'nvim-treesitter/nvim-treesitter'
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -54,7 +56,7 @@ packer.startup(function(use)
     -- use 'sheerun/vim-polyglot' -- Syntax highlighting 
     use 'nvim-lualine/lualine.nvim' -- Statusline
     use 'kyazdani42/nvim-web-devicons' -- File icons
-    
+
     -- use {
     --     'nvim-lualine/lualine.nvim', -- Statusline
     --     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
