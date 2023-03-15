@@ -21,13 +21,6 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-local function config(_config)
-	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-        on_attach = on_attach
-	}, _config or {})
-end
-
 local on_attach = function(client, bufnr)
     local opts = {buffer = bufnr, remap = false}
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -37,6 +30,13 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "gr", '<cmd>lua require"mappings".lsp_references()<CR>', opts)
     vim.keymap.set("n", "gi", '<cmd>lua require"mappings".lsp_implementations()<CR>', opts)
     -- vim.kenmap.set("n", "<leader>cr", function() vim.lsp.buf.rename() end, opts)
+end
+
+local function config(_config)
+	return vim.tbl_deep_extend("force", {
+		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+        on_attach = on_attach
+	}, _config or {})
 end
 
 -- LSP -Typescript server

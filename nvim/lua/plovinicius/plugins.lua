@@ -17,7 +17,7 @@ packer.startup(function(use)
     use 'nvim-telescope/telescope-file-browser.nvim'
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
-    -- use 'ThePrimeagen/harpoon'
+    use 'ThePrimeagen/harpoon'
     use {
         "folke/todo-comments.nvim", -- Highlight TODO | FIXME
         requires = "nvim-lua/plenary.nvim",
@@ -55,7 +55,7 @@ packer.startup(function(use)
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'JoosepAlviste/nvim-ts-context-commentstring'
-    use 'simrat39/rust-tools.nvim'
+    -- use 'simrat39/rust-tools.nvim'
     -- use 'nvim-treesitter/nvim-treesitter'
     use {
         'nvim-treesitter/nvim-treesitter',
