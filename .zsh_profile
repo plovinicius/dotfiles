@@ -1,9 +1,7 @@
-# VIM="nvim"
 alias sourcevim='source ~/.config/nvim/init.lua'
-alias vconf='cd ~/.config/nvim; nvim .'
+alias sourcekitty='source ~/.config/kitty/kitty.conf'
 alias dockerstop='docker stop $(docker ps -a -q)'
 alias dockerup='docker compose up -d'
 alias vim='nvim'
 alias apachestop='sudo systemctl stop apache2'
 alias apachestatus='sudo systemctl status apache2'
-alias fd='fdfind'
