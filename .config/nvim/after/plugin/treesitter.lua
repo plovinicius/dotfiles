@@ -1,51 +1,36 @@
-local status, treesitter = pcall(require, "nvim-treesitter.configs")
+local status, ts = pcall(require, "nvim-treesitter.configs")
 if (not status) then return end
 
-treesitter.setup {
-    context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-    } ,
+ts.setup {
     highlight = {
-            enable = true,
-            disable = {},
+      enable = true,
+      disable = {},
     },
     indent = {
-            enable = true,
-            disable = {},
+      enable = true,
+      disable = {},
     },
     ensure_installed = {
-            "markdown",
-            "markdown_inline",
-            "tsx",
-            "toml",
-            "php",
-            "json",
-            "yaml",
-            "css",
-            "html",
-            "lua",
-            "rust",
-            "scss",
-            "sql",
+      "markdown",
+      "markdown_inline",
+      "tsx",
+      "typescript",
+      "toml",
+      "bash",
+      "php",
+      "json",
+      "yaml",
+      "rust",
+      "css",
+      "html",
+      "lua",
+      "vim"
     },
-    autotag = {
-            enable = true,
-    },
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-            keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ['af'] = '@function.outer',
-                ['if'] = '@function.inner',
-                ['ac'] = '@class.outer',
-                ['ic'] = '@class.inner',
-            },
-        },
-    },
-}
-
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
+    context_commentstring = {
+      enable         = true,
+      enable_autocmd = false,
+    }
+  }
+  
+  local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+  parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
