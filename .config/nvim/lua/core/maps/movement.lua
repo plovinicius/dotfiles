@@ -19,6 +19,12 @@ keymap("v", "<", "<gv")
 keymap("n", "<C-k>", "ddkP")
 keymap("n", "<C-j>", "ddp")
 
+-- Move to end and beginning of the line
+keymap("n", "H", "^")
+keymap("v", "H", "^")
+keymap("n", "L", "$")
+keymap("v", "L", "$")
+
 -- Move text up and down on visual mode
 keymap("v", "<A-j>", "<Esc><cmd>m .+1<CR>==gi")
 keymap("x", "<A-j>", "<Esc><cmd>m .+1<CR>==gi")

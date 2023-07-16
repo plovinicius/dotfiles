@@ -17,4 +17,4 @@ keymap("n", "q", "<Nop>")
 keymap("i", "<C-c>", "<esc>")
 
 -- Neo tree
-keymap("n", "<leader>ce", "<cmd>NeoTreeShowToggle<cr>")
+keymap("n", "<leader>e", "<cmd>NeoTreeFocusToggle<cr>")
