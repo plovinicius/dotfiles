@@ -3,26 +3,25 @@ local keymap = vim.keymap.set
 -- Close current buffer
 keymap("n", "<leader>q", "<cmd>:bw<cr>")
 
--- Tab management
--- keymap("n", "<leader>to", ":tabnew<CR>")
--- keymap("n", "<leader>t.", ":tabclose<CR>")
--- keymap("n", "<leader>tn", ":tabn<CR>")
--- keymap("n", "<leader>tp", ":tabp<CR>")
+-- Other window
+keymap("n", "<leader>ww", "<C-W>p", { remap = true })
+
+-- Delete window
+keymap("n", "<leader>wq", "<C-W>c", { remap = true })
 
 -- Split window
 keymap("n", "<leader>s-", ":split<Return><C-w>w")
 keymap("n", "<leader>s=", ":vsplit<Return><C-w>w")
 keymap("n", "<leader>sq", ":close<CR>")
 
--- Move window
-keymap("n", "<leader>sf", "<C-w>w")
-keymap("n", "<leader>sh", "<C-w>h")
-keymap("n", "<leader>sk", "<C-w>k")
-keymap("n", "<leader>sj", "<C-w>j")
-keymap("n", "<leader>sl", "<C-w>l")
+-- Movement between windows
+keymap({"n", "t"}, "<C-h>", "<C-w>h")
+keymap({"n", "t"}, "<C-k>", "<C-w>k")
+keymap({"n", "t"}, "<C-j>", "<C-w>j")
+keymap({"n", "t"}, "<C-l>", "<C-w>l")
 
--- Resize window
-keymap("n", "<leader><right>", "<C-w><")
-keymap("n", "<leader><left>", "<C-w>>")
-keymap("n", "<leader><up>", "<C-w>+")
-keymap("n", "<leader><down>", "<C-w>-")
+-- Resize windows
+keymap("n", "<C-Up>", "<cmd>resize +2<cr>")
+keymap("n", "<C-Down>", "<cmd>resize -2<cr>")
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<cr>")
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<cr>")

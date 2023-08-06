@@ -28,18 +28,6 @@ api.nvim_create_autocmd("BufReadPost", {
 
 api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
--- show cursor line only in active window
-local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
-api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
-  pattern = "*",
-  command = "set cursorline",
-  group = cursorGrp,
-})
-api.nvim_create_autocmd(
-  { "InsertEnter", "WinLeave" },
-  { pattern = "*", command = "set nocursorline", group = cursorGrp }
-)
-
 -- Enable spell checking for certain file types
 api.nvim_create_autocmd(
   { "BufRead", "BufNewFile" },
@@ -88,3 +76,40 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- resize neovim split when terminal is resized
 vim.api.nvim_command("autocmd VimResized * wincmd =")
+
+-- netrw custom keymap
+api.nvim_create_autocmd("FileType", {
+  pattern = "netrw",
+  desc = 'Better mappings for netrw',
+  callback = function()
+    local bind = function(lhs, rhs)
+      vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
+    end 
+
+    -- Help
+    bind('?', '<F1>')
+
+    -- Go up a directory
+    bind('h', '-^')
+
+    -- Go down a directory / open a file
+    bind('l', '<CR>')
+
+    -- Close preview window
+    bind('P', '<C-w>z')
+  end
+})
+
+-- Open Telescope on startup if the first argument is a directory
+-- local ts_group = vim.api.nvim_create_augroup("TelescopeOnEnter", { clear = true })
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, {
+--     callback = function()
+--         local first_arg = vim.v.argv[3]
+--         if first_arg and vim.fn.isdirectory(first_arg) == 1 then
+--             -- Vim creates a buffer for folder. Close it.
+--             vim.cmd(":bd 1")
+--             require("telescope.builtin").find_files({ search_dirs = { first_arg } })
+--         end
+--     end,
+--     group = ts_group,
+-- })

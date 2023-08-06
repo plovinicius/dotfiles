@@ -10,12 +10,21 @@ vim.opt.clipboard:append { 'unnamedplus' }
 
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.wo.colorcolumn = "80"
+vim.wo.colorcolumn = "120"
 vim.opt.nu = true
 
 -- default is menu,preview
 vim.o.completeopt = 'menuone,noselect'
 vim.o.updatetime = 50
+
+-- Disable netrw
+-- vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+
+-- Netrw config when enabled
+vim.g.netrw_keepdir = 0
+vim.g.netrw_winsize = 25
+vim.g.netrw_localcopydircmd = 'cp -r'
 
 vim.opt.title = true
 vim.opt.autoindent = true

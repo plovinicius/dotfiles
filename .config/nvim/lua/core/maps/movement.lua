@@ -1,5 +1,9 @@
 local keymap = vim.keymap.set
 
+-- better up/down
+keymap({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keymap({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
 -- Delete character but not put in the undo buffer
 keymap("n", "x", '"_x')
 
@@ -20,13 +24,9 @@ keymap("n", "<C-k>", "ddkP")
 keymap("n", "<C-j>", "ddp")
 
 -- Move to end and beginning of the line
-keymap("n", "H", "^")
-keymap("v", "H", "^")
-keymap("n", "L", "$")
-keymap("v", "L", "$")
+keymap({"n", "v"}, "H", "^")
+keymap({"n", "v"}, "L", "$")
 
 -- Move text up and down on visual mode
-keymap("v", "<A-j>", "<Esc><cmd>m .+1<CR>==gi")
-keymap("x", "<A-j>", "<Esc><cmd>m .+1<CR>==gi")
-keymap("v", "<A-k>", "<Esc><cmd>m .-2<CR>==gi")
-keymap("x", "<A-k>", "<Esc><cmd>m .-2<CR>==gi")
+keymap({"v", "x"}, "<A-j>", "<Esc><cmd>m .+1<CR>gv")
+keymap({"v", "x"}, "<A-k>", "<Esc><cmd>m .-2<CR>gv")

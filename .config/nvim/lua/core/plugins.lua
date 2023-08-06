@@ -20,7 +20,7 @@ local plugins = {
   },
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
-  "jose-elias-alvarez/null-ls.nvim",
+  -- "jose-elias-alvarez/null-ls.nvim",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/nvim-cmp",
@@ -32,26 +32,27 @@ local plugins = {
   "nvim-tree/nvim-web-devicons",
   "numToStr/Comment.nvim",
   "JoosepAlviste/nvim-ts-context-commentstring",
-  "folke/todo-comments.nvim",
   "lukas-reineke/indent-blankline.nvim",
   "folke/todo-comments.nvim",
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-tree/nvim-web-devicons"
+  --   }
+  -- },
+  -- {
+  --   "rebelot/kanagawa.nvim",
+  --   enabled = true,
+  --   priority = 1000
+  -- },
+  -- "EdenEast/nightfox.nvim",
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    },
-    event = "VeryLazy",
-  },
-  {
-    "sainnhe/gruvbox-material",
-    enabled = true,
-    priority = 500,
+    'rose-pine/neovim',
+    name = 'rose-pine',
     config = function()
-      vim.o.background = "dark"
-      vim.g.gruvbox_material_background = "hard"
-      vim.g.gruvbox_material_transparent_background = 1
-      vim.cmd.colorscheme "gruvbox-material"
-    end,
+		  vim.cmd('colorscheme rose-pine')
+	  end
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -61,7 +62,6 @@ local plugins = {
   },
   "nvim-treesitter/nvim-treesitter",
   "nvim-treesitter/nvim-treesitter-textobjects",
-  "ThePrimeagen/refactoring.nvim",
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.1",
@@ -73,7 +73,8 @@ local plugins = {
       },
       "nvim-telescope/telescope-ui-select.nvim"
     }
-  }
+  },
+  "nvim-telescope/telescope-file-browser.nvim"
 }
 
 local opts = {}
