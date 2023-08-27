@@ -21,19 +21,12 @@ keymap({ "n", "x" }, "gw", "*N")
 
 -- Next search result
 keymap({"n", "x", "o"}, "n", "'Nn'[v:searchforward]")
--- keymap("x", "n", "'Nn'[v:searchforward]")
--- keymap("o", "n", "'Nn'[v:searchforward]")
 
 -- Prev search result
 keymap({"n", "x", "o"}, "n", "'nN'[v:searchforward]")
--- keymap("x", "N", "'nN'[v:searchforward]")
--- keymap("o", "N", "'nN'[v:searchforward]")
 
 -- Save file
 keymap({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
-
--- Force Quit all
-keymap("n", "<leader>qq", "<cmd>qa!<cr>")
 
 -- Neo tree
 -- keymap("n", "<leader>e", "<cmd>Neotree action=focus toggle=true reveal=true<cr>")
@@ -41,5 +34,5 @@ keymap("n", "<leader>qq", "<cmd>qa!<cr>")
 -- File Explorer NETRW
 -- keymap("n", "<leader>e", "<cmd>Explore<cr>")
 
--- Reload NVIM config
--- keymap("n", "<leader>rn", "<cmd>so ~/.config/nvim/init.lua<cr>")
+-- Close all buffers but current
+keymap("n", "<leader>qf", "<cmd>%bd|e#<cr>")
