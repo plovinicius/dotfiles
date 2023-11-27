@@ -12,6 +12,7 @@ keymap("n", "q", "<Nop>")
 
 -- Escape and clear hlsearch
 keymap({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>")
+keymap({ "i", "n" }, "<C-c>", "<cmd>noh<cr><esc>")
 
 -- Exit
 keymap("i", "<C-c>", "<esc>")
@@ -32,7 +33,10 @@ keymap({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
 -- keymap("n", "<leader>e", "<cmd>Neotree action=focus toggle=true reveal=true<cr>")
 
 -- File Explorer NETRW
--- keymap("n", "<leader>e", "<cmd>Explore<cr>")
+keymap("n", "<leader>e", "<cmd>Ex<cr>")
 
 -- Close all buffers but current
-keymap("n", "<leader>qf", "<cmd>%bd|e#<cr>")
+keymap("n", "<leader>bd", "<cmd>bd<cr>")
+
+-- GitSigns git blame
+keymap("n", "gh", "<cmd>Gitsigns blame_line<cr>")

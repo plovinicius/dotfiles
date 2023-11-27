@@ -1,12 +1,9 @@
 local keymap = vim.keymap.set
 
--- Other window
-keymap("n", "<leader>ww", "<C-W>p", { remap = true })
-
 -- Split window
-keymap("n", "<leader>sp", ":split<Return><C-w>w")
-keymap("n", "<leader>sl", ":vsplit<Return><C-w>w")
-keymap("n", "<leader>sq", ":close<CR>")
+keymap("n", "<A-Enter>", ":split<Return><C-w>w")
+keymap("n", "<A-S-Enter>", ":vsplit<Return><C-w>w")
+keymap("n", "<A-BS>", ":close<CR>")
 
 -- Movement between windows
 keymap({"n", "t"}, "<C-h>", "<C-w>h")
@@ -19,3 +16,10 @@ keymap("n", "<C-Up>", "<cmd>resize +2<cr>")
 keymap("n", "<C-Down>", "<cmd>resize -2<cr>")
 keymap("n", "<C-Left>", "<cmd>vertical resize +2<cr>")
 keymap("n", "<C-Right>", "<cmd>vertical resize -2<cr>")
+
+-- Bufferline
+for i = 1, 9 do
+  keymap("n", "<leader>" .. i, function()
+    require("bufferline").go_to_buffer(i, true)
+  end)
+end

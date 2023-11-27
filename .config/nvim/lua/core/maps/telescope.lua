@@ -1,18 +1,15 @@
+local status, telescope = pcall(require, "telescope")
+if (not status) then return end
+
 local keymap = vim.keymap.set
-local opts = { silent = true }
+local builtin = require('telescope.builtin')
 
--- Find Files
-keymap("n", "<leader>fd", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<C-p>", "<cmd>Telescope find_files<cr>", opts)
-
--- Current buffer fuzzy find
-keymap("n", "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
-
--- Live Grep
-keymap("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", opts)
-
--- Buffers
-keymap("n", "<leader>fe", "<cmd>Telescope buffers previewer=false<cr>", opts)
-
--- File Explorer/Brower
-keymap("n", "<leader>e", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>", opts)
+keymap("n", "<leader>sf", builtin.find_files)
+keymap("n", "<leader>fs", builtin.current_buffer_fuzzy_find)
+keymap("n", "<leader>fe", builtin.buffers)
+keymap("n", "<leader>gf", builtin.git_files)
+keymap("n", "<leader>sh", builtin.help_tags)
+keymap("n", "<leader>sw", builtin.grep_string)
+keymap("n", "<leader>sg", builtin.live_grep)
+-- keymap("n", "<leader>sd", builtin.diagnostics)
+keymap("n", "<leader>sr", builtin.resume)

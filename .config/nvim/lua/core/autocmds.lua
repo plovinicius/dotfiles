@@ -89,12 +89,6 @@ api.nvim_create_autocmd("FileType", {
     -- Help
     bind('?', '<F1>')
 
-    -- Go up a directory
-    bind('h', '-^')
-
-    -- Go down a directory / open a file
-    bind('l', '<CR>')
-
     -- Close preview window
     bind('P', '<C-w>z')
   end

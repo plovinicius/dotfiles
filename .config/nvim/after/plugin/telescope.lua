@@ -23,73 +23,118 @@ local new_maker = function(filepath, bufnr, opts)
   }):sync()
 end
 
-local dropdown_layout = {
-  theme = "dropdown",
-  preview = false,
-  layout_config = {
-    width = 0.5,
-    height = 0.4,
-    prompt_position = "top",
-    preview_cutoff = 120,
-  },
-}
+-- function to get width based on screen size
+local get_width = function(_, cols, _)
+  if cols > 200 then
+    return 170
+  else
+    return math.floor(cols * 0.9)
+  end
+end
 
-local grep_layout = {
-  only_sort_text = true,
-  preview = false,
-  layout_config = {
-    width = 0.9,
-    height = 0.75,
-    preview_width = 0.6,
+local dropdown_layout = function(title)
+  return {
+    prompt_title = title,
+    theme = "dropdown",
+    preview = false,
+    layout_config = {
+      width = get_width,
+      height = 0.4,
+      prompt_position = "top",
+    }
   }
-}
+end
 
-local references_layout = {
-  show_line = false,
-  preview = true,
-  layout_config = {
-    width = 0.9,
-    height = 0.75,
-    preview_width = 0.6,
+local grep_layout = function(title)
+  return {
+    prompt_title = title,
+    only_sort_text = true,
+    preview = true,
+    layout_config = {
+      width = get_width,
+      height = 0.75,
+      preview_width = 0.5,
+      preview_cutoff = 120,
+    }
   }
-}
+end
+
+local references_layout = function(title)
+  return {
+    prompt_title = title,
+    show_line = false,
+    preview = true,
+    layout_config = {
+      width = get_width,
+      height = 0.75,
+      preview_width = 0.5,
+      preview_cutoff = 120,
+    }
+  }
+end
 
 telescope.setup {
   defaults = {
     preview = false,
     buffer_previewer_maker = new_maker,
     prompt_prefix = "",
+    vimgrep_arguments = {
+			"rg",
+			"--color=never",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"--smart-case",
+		},
+    file_sorter = require("telescope.sorters").get_fuzzy_file,
+    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+    dynamic_preview_title = true,
+    winblend = 0,
     file_ignore_patterns = {
       "node_modules",
       "vendor",
       "public/css",
       "public/js",
-      ".git",
+      ".git/",
       "package-lock.json"
     },
+    path_display = { "truncate" },
     initial_mode = "insert",
     select_strategy = "reset",
     sorting_strategy = "ascending",
     mappings = {
       i = {
         ["<C-c>"] = "close",
-        ["<C-j>"] = "move_selection_next",
-        ["<C-k>"] = "move_selection_previous",
-      },
-      n = {
-        ["<C-c>"] = "close",
-        ["<C-j>"] = "move_selection_next",
-        ["<C-k>"] = "move_selection_previous",
+        ["<Tab>"] = "move_selection_next",
+        ["<S-Tab>"] = "move_selection_previous",
+        ["<C-d>"] = "delete_buffer",
       }
     }
   },
   pickers = {
-    find_files = dropdown_layout,
-    git_files = dropdown_layout,
-    buffers = dropdown_layout,
-    live_grep = grep_layout,
-    grep_string = grep_layout,
-    lsp_references = references_layout
+    find_files = dropdown_layout("[sf] Search Files"),
+    git_files = dropdown_layout("[gf] Search git files"),
+    buffers = dropdown_layout("[fe] Find existing buffers"),
+    live_grep = grep_layout("[sg] Search by grep"),
+    grep_string = grep_layout("[sw] Search current word"),
+    lsp_references = references_layout("[gr] Goto References"),
+    lsp_definitions = references_layout("[gd] Goto Definitions"),
+    current_buffer_fuzzy_find = {
+      prompt_title = "[fs] Fuzzily search in current buffer"
+    },
+    help_tags = {
+      prompt_title = "[sh] Search help"
+    },
+    diagnostics = {
+      prompt_title = "[sd] Search Diagnostics"
+    },
+    resume = {
+      prompt_title = "[sr] Search Resume"
+    },
+    lsp_implementations = {
+      prompt_title = "[gI] Goto Implementations"
+    },
   },
   extensions = {
     fzf = {

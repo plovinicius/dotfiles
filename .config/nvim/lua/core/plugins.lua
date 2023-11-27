@@ -20,7 +20,6 @@ local plugins = {
   },
   "williamboman/mason-lspconfig.nvim",
   "neovim/nvim-lspconfig",
-  -- "jose-elias-alvarez/null-ls.nvim",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/nvim-cmp",
@@ -30,10 +29,23 @@ local plugins = {
   "glepnir/lspsaga.nvim",
   "nvim-lualine/lualine.nvim",
   "nvim-tree/nvim-web-devicons",
-  "numToStr/Comment.nvim",
-  "JoosepAlviste/nvim-ts-context-commentstring",
-  "lukas-reineke/indent-blankline.nvim",
-  "folke/todo-comments.nvim",
+  {
+    "numToStr/Comment.nvim",
+    lazy = true
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = true
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    lazy = true
+  },
+  {
+    "folke/todo-comments.nvim",
+    lazy = true
+  },
+
   -- {
   --   "nvim-neo-tree/neo-tree.nvim",
   --   dependencies = {
@@ -41,26 +53,30 @@ local plugins = {
   --     "nvim-tree/nvim-web-devicons"
   --   }
   -- },
-  -- {
-  --   "rebelot/kanagawa.nvim",
-  --   enabled = true,
-  --   priority = 1000
-  -- },
-  -- "EdenEast/nightfox.nvim",
   {
-    'rose-pine/neovim',
-    name = 'rose-pine',
+    "sainnhe/gruvbox-material",
+    enabled = true,
+    priority = 1000,
     config = function()
-		  vim.cmd('colorscheme rose-pine')
-	  end
+      vim.o.background = "dark"
+      vim.g.gruvbox_material_background = "hard"
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.cmd.colorscheme 'gruvbox-material'
+      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    end,
   },
   {
     "iamcco/markdown-preview.nvim",
+    lazy = true,
     config = function()
       vim.fn["mkdp#util#install"]()
     end,
   },
-  "nvim-treesitter/nvim-treesitter",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ':TSUpdate',
+  },
   "nvim-treesitter/nvim-treesitter-textobjects",
   {
     "nvim-telescope/telescope.nvim",
@@ -74,7 +90,21 @@ local plugins = {
       "nvim-telescope/telescope-ui-select.nvim"
     }
   },
-  "nvim-telescope/telescope-file-browser.nvim"
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    lazy = true
+  },
+  "gpanders/editorconfig.nvim",
+  "lewis6991/gitsigns.nvim",
+  {
+    "fatih/vim-go",
+    build = ":GoUpdateBinaries"
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons'
+  }
 }
 
 local opts = {}
