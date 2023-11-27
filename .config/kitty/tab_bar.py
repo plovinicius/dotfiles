@@ -1,150 +1,169 @@
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
-from kitty.boss import Boss
-from kitty.fast_data_types import (
-    Color,
-    Screen,
-    get_boss,
-    get_options,
-)
+# pyright: reportMissingImports=false
+from datetime import datetime
+from kitty.boss import get_boss
+from kitty.fast_data_types import Screen, add_timer, get_options
+from kitty.utils import color_as_int
 from kitty.tab_bar import (
-    Dict,
     DrawData,
     ExtraData,
+    Formatter,
     TabBarData,
     as_rgb,
+    draw_attributed_string,
     draw_title,
 )
-from kitty.utils import color_as_int
-from kitty.window import Window
 
-# Whether to add padding to title of tabs
-PADDED_TABS = False
+opts = get_options()
+icon_fg = as_rgb(color_as_int(opts.color16))
+icon_bg = as_rgb(color_as_int(opts.color8))
+bat_text_color = as_rgb(color_as_int(opts.color15))
+clock_color = as_rgb(color_as_int(opts.color15))
+date_color = as_rgb(color_as_int(opts.color8))
+SEPARATOR_SYMBOL, SOFT_SEPARATOR_SYMBOL = ("", "")
+RIGHT_MARGIN = 1
+REFRESH_TIME = 1
+ICON = "  "
+UNPLUGGED_ICONS = {
+    10: "",
+    20: "",
+    30: "",
+    40: "",
+    50: "",
+    60: "",
+    70: "",
+    80: "",
+    90: "",
+    100: "",
+}
+PLUGGED_ICONS = {
+    1: "",
+}
+UNPLUGGED_COLORS = {
+    15: as_rgb(color_as_int(opts.color1)),
+    16: as_rgb(color_as_int(opts.color15)),
+}
+PLUGGED_COLORS = {
+    15: as_rgb(color_as_int(opts.color1)),
+    16: as_rgb(color_as_int(opts.color6)),
+    99: as_rgb(color_as_int(opts.color6)),
+    100: as_rgb(color_as_int(opts.color2)),
+}
 
-# Whether to draw a separator between tabs
-DRAW_SOFT_SEP = True
 
-# Whether to draw right-hand side status information inside of filled shapes
-RHS_STATUS_FILLED = True
+def _draw_icon(screen: Screen, index: int) -> int:
+    if index != 1:
+        return 0
+    fg, bg = screen.cursor.fg, screen.cursor.bg
+    screen.cursor.fg = icon_fg
+    screen.cursor.bg = icon_bg
+    screen.draw(ICON)
+    screen.cursor.fg, screen.cursor.bg = fg, bg
+    screen.cursor.x = len(ICON)
+    return screen.cursor.x
 
-# Separators and status icons
-LEFT_SEP = ""
-RIGHT_SEP = ""
-SOFT_SEP = "│"
-PADDING = " "
-BRANCH_ICON = "󰘬"
-USER_ICON = ""
-HOST_ICON = "󱡶"
-PAGER_ICON = "󰦪"
 
-# Colors
-SOFT_SEP_COLOR = Color(89, 89, 89)
-FILLED_ICON_BG_COLOR = Color(89, 89, 89)
-ACCENTED_BG_COLOR = Color(30, 104, 199)
-ACCENTED_ICON_BG_COLOR = Color(53, 132, 228)
-
-def _draw_element(
-    title: str,
+def _draw_left_status(
+    draw_data: DrawData,
     screen: Screen,
     tab: TabBarData,
     before: int,
     max_title_length: int,
     index: int,
-    colors: Dict[str, int],
-    filled: bool = False,
-    padded: bool = False,
-    accented: bool = False,
-    icon: Optional[str] = None,
-    soft_sep: Optional[str] = None,
+    is_last: bool,
+    extra_data: ExtraData,
 ) -> int:
-    if accented:
-        text_fg = colors["accented_fg"]
-        text_bg = colors["accented_bg"]
-        icon_bg = colors["accented_icon_bg"]
-    elif filled:
-        text_fg = colors["filled_fg"]
-        text_bg = colors["filled_bg"]
-        icon_bg = colors["filled_icon_bg"] if icon else colors["filled_bg"]
+    if screen.cursor.x >= screen.columns - right_status_length:
+        return screen.cursor.x
+    tab_bg = screen.cursor.bg
+    tab_fg = screen.cursor.fg
+    default_bg = as_rgb(int(draw_data.default_bg))
+    if extra_data.next_tab:
+        next_tab_bg = as_rgb(draw_data.tab_bg(extra_data.next_tab))
+        needs_soft_separator = next_tab_bg == tab_bg
     else:
-        text_fg = colors["fg"]
-        text_bg = colors["bg"]
-        icon_bg = colors["bg"]
-
-    components = list()
-
-    # Left separator
-    components.append((LEFT_SEP, icon_bg, colors["bg"]))
-    # Padding between left separator and rest of tab
-    if padded:
-        components.append((PADDING, text_fg, text_bg))
-    # Icon, with padding on the right if there's a tab title, and more padding before
-    # title if the tab is filled and there's a tab title
-    if icon:
-        icon_padding = PADDING if title != "" else ""
-        components.append((f"{icon}{icon_padding}", text_fg, icon_bg))
-        if filled and title != "":
-            components.append((PADDING, text_fg, text_bg))
-    # Title
-    components.append((title, text_fg, text_bg))
-    # Padding between tab content and right separator
-    if padded:
-        components.append((PADDING, text_fg, text_bg))
-    # Right separator, which is drawn using the same colors as the left separator in
-    # case there isn't a tab title
-    right_sep_fg = text_bg if title != "" else icon_bg
-    components.append((RIGHT_SEP, right_sep_fg, colors["bg"]))
-    # Inter-tab soft separator
-    if soft_sep:
-        components.append((soft_sep, colors["soft_sep_fg"], colors["bg"]))
-
-    for c in components:
-        screen.cursor.fg = c[1]
-        screen.cursor.bg = c[2]
-        if isinstance(c[0], str):
-            screen.draw(c[0])
-        else:
-            draw_title(c[0], screen, tab, index)
-
-    # Element ends before soft separator
-    end = screen.cursor.x - (len(soft_sep) if soft_sep else 0)
-    
+        next_tab_bg = default_bg
+        needs_soft_separator = False
+    if screen.cursor.x <= len(ICON):
+        screen.cursor.x = len(ICON)
+    screen.draw(" ")
+    screen.cursor.bg = tab_bg
+    draw_title(draw_data, screen, tab, index)
+    if not needs_soft_separator:
+        screen.draw(" ")
+        screen.cursor.fg = tab_bg
+        screen.cursor.bg = next_tab_bg
+        screen.draw(SEPARATOR_SYMBOL)
+    else:
+        prev_fg = screen.cursor.fg
+        if tab_bg == tab_fg:
+            screen.cursor.fg = default_bg
+        elif tab_bg != default_bg:
+            c1 = draw_data.inactive_bg.contrast(draw_data.default_bg)
+            c2 = draw_data.inactive_bg.contrast(draw_data.inactive_fg)
+            if c1 < c2:
+                screen.cursor.fg = default_bg
+        screen.draw(" " + SOFT_SEPARATOR_SYMBOL)
+        screen.cursor.fg = prev_fg
+    end = screen.cursor.x
     return end
 
 
-def _calc_elements_len(elements: List[Dict[str, Any]]) -> int:
-    elements_len = 0
-    for element in elements:
-        title, icon = element["title"], element["icon"]
-        # Icon
-        elements_len += len(icon)
-        # Icon padding, if element has a title
-        elements_len += len(PADDING) if title != "" else 0
-        # Title
-        elements_len += len(title)
-        # Separators
-        elements_len += 2
-        if RHS_STATUS_FILLED:
-            # Title padding, if element has a title
-            elements_len += len(PADDING) if title != "" else 0
-    # Inter-tab soft separators
-    elements_len += len(elements) - 1
-    return elements_len
+def _draw_right_status(screen: Screen, is_last: bool, cells: list) -> int:
+    if not is_last:
+        return 0
+    draw_attributed_string(Formatter.reset, screen)
+    screen.cursor.x = screen.columns - right_status_length
+    screen.cursor.fg = 0
+    for color, status in cells:
+        screen.cursor.fg = color
+        screen.draw(status)
+    screen.cursor.bg = 0
+    return screen.cursor.x
 
 
-def _is_running_pager(active_window: Window) -> bool:
+def _redraw_tab_bar(_):
+    tm = get_boss().active_tab_manager
+    if tm is not None:
+        tm.mark_tab_bar_dirty()
+
+
+def get_battery_cells() -> list:
     try:
-        return Path(active_window.child.argv[0]).name == "nvim-pager.py"
-    except:
-        return False
+        with open("/sys/class/power_supply/BAT0/status", "r") as f:
+            status = f.read()
+        with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
+            percent = int(f.read())
+        if status == "Discharging\n":
+            # TODO: declare the lambda once and don't repeat the code
+            icon_color = UNPLUGGED_COLORS[
+                min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = UNPLUGGED_ICONS[
+                min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        elif status == "Not charging\n":
+            icon_color = UNPLUGGED_COLORS[
+                min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = PLUGGED_ICONS[
+                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        else:
+            icon_color = PLUGGED_COLORS[
+                min(PLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = PLUGGED_ICONS[
+                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        percent_cell = (bat_text_color, str(percent) + "% ")
+        icon_cell = (icon_color, icon)
+        return [percent_cell, icon_cell]
+    except FileNotFoundError:
+        return []
 
 
-def _get_system_info(active_window: Window) -> Dict[str, Any]:
-    user = "Paulo Pinheiro"
-    host = "mac"
-    is_ssh = False
-
-    return {"user": user, "is_ssh": is_ssh}
-
+timer_id = None
+right_status_length = -1
 
 def draw_tab(
     draw_data: DrawData,
@@ -156,82 +175,33 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    opts = get_options()
-    colors = {}
+    global timer_id
+    global right_status_length
+    if timer_id is None:
+        timer_id = add_timer(_redraw_tab_bar, REFRESH_TIME, True)
+    clock = datetime.now().strftime(" %H:%M")
+    # date = datetime.now().strftime(" %d.%m.%Y")
+    cells = get_battery_cells()
+    cells.append((clock_color, clock))
+    # cells.append((date_color, date))
+    right_status_length = RIGHT_MARGIN
+    for cell in cells:
+        right_status_length += len(str(cell[1]))
 
-    # Base foreground and background colors
-    colors["fg"] = as_rgb(color_as_int(draw_data.inactive_fg))
-    colors["bg"] = as_rgb(color_as_int(draw_data.default_bg))
-
-    # Foreground, background and icon background colors for filled tabs
-    colors["filled_fg"] = as_rgb(color_as_int(draw_data.active_fg))
-    colors["filled_bg"] = as_rgb(color_as_int(draw_data.active_bg))
-    colors["filled_icon_bg"] = as_rgb(color_as_int(FILLED_ICON_BG_COLOR))
-
-    # Foreground, background and icon background colors for accented tabs
-    colors["accented_fg"] = as_rgb(color_as_int(draw_data.active_fg))
-    colors["accented_bg"] = as_rgb(color_as_int(ACCENTED_BG_COLOR))
-    colors["accented_icon_bg"] = as_rgb(color_as_int(ACCENTED_ICON_BG_COLOR))
-
-    # Inter-tab separator color
-    colors["soft_sep_fg"] = as_rgb(color_as_int(SOFT_SEP_COLOR))
-
-    soft_sep = None
-    if DRAW_SOFT_SEP:
-        if extra_data.next_tab:
-            both_inactive = not tab.is_active and not extra_data.next_tab.is_active
-            soft_sep = SOFT_SEP if both_inactive else PADDING
-
-    # Draw main tabs
-    end = _draw_element(
+    _draw_icon(screen, index)
+    _draw_left_status(
         draw_data,
         screen,
         tab,
         before,
         max_title_length,
         index,
-        colors,
-        filled=tab.is_active,
-        padded=PADDED_TABS,
-        soft_sep=soft_sep,
+        is_last,
+        extra_data,
     )
-
-    # Draw right-hand side status
-    if is_last:
-        boss: Boss = get_boss()
-        active_window = boss.active_window
-        assert isinstance(active_window, Window)
-
-        is_running_pager = _is_running_pager(active_window)
-        sys_info = _get_system_info(active_window)
-        user, is_ssh = sys_info["user"], sys_info["is_ssh"]
-
-        elements = list()
-        if is_running_pager:
-            elements.append({"title": "", "icon": PAGER_ICON, "accented": True})
-        elements.append({"title": user, "icon": USER_ICON, "accented": is_ssh})
-
-        # Move cursor horizontally so that right-hand side status is right-aligned
-        rhs_status_len = _calc_elements_len(elements)
-        if opts.tab_bar_align == "center":
-            screen.cursor.x = math.ceil(screen.columns / 2 + end / 2) - rhs_status_len
-        else:  # opts.tab_bar_align == "left"
-            screen.cursor.x = screen.columns - rhs_status_len
-
-        for element in elements:
-            _draw_element(
-                element["title"],
-                screen,
-                tab,
-                before,
-                100,
-                index,
-                colors,
-                filled=RHS_STATUS_FILLED,
-                padded=False,
-                accented=element["accented"],
-                icon=element["icon"],
-                soft_sep=PADDING if element is not elements[-1] else None,
-            )
-            
-    return end
+    _draw_right_status(
+        screen,
+        is_last,
+        cells,
+    )
+    return screen.cursor.x
