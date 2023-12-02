@@ -3,11 +3,6 @@
         "prefix": "log",
         "body": "console.log($0);"
     },
-    "logc": {
-        "description": "console log with colors",
-        "prefix": "logc",
-        "body": "console.log('%c$1', 'font-weight:bold;color:${2:green}');"
-    },
     "describe": {
         "prefix": "des",
         "description": "Describe body for tests",

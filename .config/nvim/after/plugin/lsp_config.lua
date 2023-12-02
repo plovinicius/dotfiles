@@ -20,8 +20,6 @@ masonlsp.setup {
     "rust_analyzer",
     "tsserver",
     "tailwindcss",
-    "phpactor",
-    "gopls",
     "jsonls",
     "marksman"
   },

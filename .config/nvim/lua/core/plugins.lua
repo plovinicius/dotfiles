@@ -39,32 +39,30 @@ local plugins = {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    lazy = true
+    main = "ibl",
+    opts = {}
   },
   {
     "folke/todo-comments.nvim",
     lazy = true
   },
-
   -- {
-  --   "nvim-neo-tree/neo-tree.nvim",
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-tree/nvim-web-devicons"
-  --   }
+  --   "sainnhe/gruvbox-material",
+  --   enabled = true,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.o.background = "dark"
+  --     vim.g.gruvbox_material_background = "hard"
+  --     vim.g.gruvbox_material_transparent_background = 1
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --     -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  --     -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  --   end,
   -- },
   {
-    "sainnhe/gruvbox-material",
-    enabled = true,
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
-    config = function()
-      vim.o.background = "dark"
-      vim.g.gruvbox_material_background = "hard"
-      vim.g.gruvbox_material_transparent_background = 1
-      vim.cmd.colorscheme 'gruvbox-material'
-      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    end,
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -80,7 +78,7 @@ local plugins = {
   "nvim-treesitter/nvim-treesitter-textobjects",
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.1",
+    tag = "0.1.4",
     lazy = true,
     dependencies = {
       {
@@ -98,13 +96,9 @@ local plugins = {
   "lewis6991/gitsigns.nvim",
   {
     "fatih/vim-go",
+    lazy = true,
     build = ":GoUpdateBinaries"
   },
-  {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons'
-  }
 }
 
 local opts = {}
