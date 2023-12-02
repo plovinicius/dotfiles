@@ -107,33 +107,35 @@ telescope.setup {
       i = {
         ["<C-c>"] = "close",
         ["<Tab>"] = "move_selection_next",
+        ["<C-j>"] = "move_selection_next",
         ["<S-Tab>"] = "move_selection_previous",
+        ["<C-k>"] = "move_selection_previous",
         ["<C-d>"] = "delete_buffer",
       }
     }
   },
   pickers = {
-    find_files = dropdown_layout("[sf] Search Files"),
-    git_files = dropdown_layout("[gf] Search git files"),
-    buffers = dropdown_layout("[fe] Find existing buffers"),
-    live_grep = grep_layout("[sg] Search by grep"),
-    grep_string = grep_layout("[sw] Search current word"),
-    lsp_references = references_layout("[gr] Goto References"),
-    lsp_definitions = references_layout("[gd] Goto Definitions"),
+    find_files = dropdown_layout("Search Files"),
+    git_files = dropdown_layout("Search git files"),
+    buffers = dropdown_layout("Find existing buffers"),
+    live_grep = grep_layout("Search by grep"),
+    grep_string = grep_layout("Search current word"),
+    lsp_references = references_layout("Goto References"),
+    lsp_definitions = references_layout("Goto Definitions"),
     current_buffer_fuzzy_find = {
-      prompt_title = "[fs] Fuzzily search in current buffer"
+      prompt_title = "Fuzzily search in current buffer"
     },
     help_tags = {
-      prompt_title = "[sh] Search help"
+      prompt_title = "Search help"
     },
     diagnostics = {
-      prompt_title = "[sd] Search Diagnostics"
+      prompt_title = "Search Diagnostics"
     },
     resume = {
-      prompt_title = "[sr] Search Resume"
+      prompt_title = "Search Resume"
     },
     lsp_implementations = {
-      prompt_title = "[gI] Goto Implementations"
+      prompt_title = "Goto Implementations"
     },
   },
   extensions = {

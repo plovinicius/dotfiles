@@ -7,6 +7,9 @@ keymap("n", "-", "<C-x>")
 -- Select all
 keymap("n", "<C-a>", "gg<S-v>G")
 
+-- Change macro key
+keymap("n", "Q", "q")
+
 -- Disabled recording macro key
 keymap("n", "q", "<Nop>")
 
@@ -29,14 +32,23 @@ keymap({"n", "x", "o"}, "n", "'nN'[v:searchforward]")
 -- Save file
 keymap({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
 
--- Neo tree
--- keymap("n", "<leader>e", "<cmd>Neotree action=focus toggle=true reveal=true<cr>")
-
 -- File Explorer NETRW
 keymap("n", "<leader>e", "<cmd>Ex<cr>")
 
--- Close all buffers but current
-keymap("n", "<leader>bd", "<cmd>bd<cr>")
+-- Close buffer
+keymap("n", "<leader>qw", "<cmd>bd<cr>")
 
 -- GitSigns git blame
-keymap("n", "gh", "<cmd>Gitsigns blame_line<cr>")
+keymap("n", "gb", "<cmd>Gitsigns blame_line<cr>")
+
+-- Source NVIM config
+keymap("n", "<leader>sc", "<cmd>source ~/.config/nvim/init.lua<cr>")
+
+-- Open NVIM config
+keymap("n", "<leader>en", "<cmd>Telescope find_files cwd=~/.config/nvim<cr>")
+
+-- Open Kitty config
+keymap("n", "<leader>ek", "<cmd>Telescope find_files cwd=~/.config/kitty<cr>")
+
+-- Open zshrc
+keymap("n", "<leader>eb", "<cmd>Telescope find_files cwd=~/.zshrc<cr>")
