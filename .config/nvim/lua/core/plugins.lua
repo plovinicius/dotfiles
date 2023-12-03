@@ -65,11 +65,11 @@ local plugins = {
     priority = 1000,
   },
   {
-    "iamcco/markdown-preview.nvim",
-    lazy = true,
-    config = function()
-      vim.fn["mkdp#util#install"]()
-    end,
+  --   "iamcco/markdown-preview.nvim",
+  --   lazy = true,
+  --   config = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -99,6 +99,8 @@ local plugins = {
     lazy = true,
     build = ":GoUpdateBinaries"
   },
+  "simrat39/rust-tools.nvim",
+  "knubie/vim-kitty-navigator"
 }
 
 local opts = {}
