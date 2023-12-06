@@ -21,6 +21,10 @@ keymap("n", "n", "nzzzv")
 keymap("n", "N", "Nzzzv")
 keymap("n", "J", "mzJ`z")
 
+-- For MacOS
+keymap("n", "<D-d>", "<C-d>zz")
+keymap("n", "<D-u>", "<C-u>zz")
+
 -- Keeps current visual block selection after indent with "<" or ">"
 keymap("v", ">", ">gv")
 keymap("v", "<", "<gv")

@@ -19,6 +19,7 @@ local plugins = {
     build = ":MasonUpdate", -- :MasonUpdate updates registry contents
   },
   "williamboman/mason-lspconfig.nvim",
+  {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
   "neovim/nvim-lspconfig",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
@@ -46,30 +47,10 @@ local plugins = {
     "folke/todo-comments.nvim",
     lazy = true
   },
-  -- {
-  --   "sainnhe/gruvbox-material",
-  --   enabled = true,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.o.background = "dark"
-  --     vim.g.gruvbox_material_background = "hard"
-  --     vim.g.gruvbox_material_transparent_background = 1
-  --     vim.cmd.colorscheme 'gruvbox-material'
-  --     -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  --     -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-  --   end,
-  -- },
   {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-  },
-  {
-  --   "iamcco/markdown-preview.nvim",
-  --   lazy = true,
-  --   config = function()
-  --     vim.fn["mkdp#util#install"]()
-  --   end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -100,7 +81,8 @@ local plugins = {
     build = ":GoUpdateBinaries"
   },
   "simrat39/rust-tools.nvim",
-  "knubie/vim-kitty-navigator"
+  "knubie/vim-kitty-navigator",
+  "mbbill/undotree"
 }
 
 local opts = {}

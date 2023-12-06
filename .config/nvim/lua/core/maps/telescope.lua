@@ -11,3 +11,6 @@ keymap("n", "<leader>gf", builtin.git_files)
 keymap("n", "<leader>sh", builtin.help_tags)
 keymap("n", "<leader>ss", builtin.grep_string)
 keymap("n", "<leader>sl", builtin.live_grep)
+
+-- For MacOS
+keymap("n", "<D-p>", builtin.find_files)

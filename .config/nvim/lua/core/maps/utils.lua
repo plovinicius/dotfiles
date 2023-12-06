@@ -1,11 +1,11 @@
 local keymap = vim.keymap.set
 
+-- Undotree
+keymap("n", "<leader>u", vim.cmd.UndotreeToggle)
+
 -- Increment/decrement
 keymap("n", "+", "<C-a>")
 keymap("n", "-", "<C-x>")
-
--- Select all
-keymap("n", "<C-a>", "gg<S-v>G")
 
 -- Change macro key
 keymap("n", "Q", "q")
@@ -37,6 +37,7 @@ keymap("n", "<leader>e", "<cmd>Ex<cr>")
 
 -- Close buffer
 keymap("n", "<leader>qw", "<cmd>bd<cr>")
+keymap("n", "<leader>qwf", "<cmd>bd!<cr>")
 
 -- GitSigns git blame
 keymap("n", "gb", "<cmd>Gitsigns blame_line<cr>")

@@ -10,6 +10,12 @@ keymap({"n"}, "<C-h>", "<cmd>KittyNavigateLeft<cr>")
 keymap({"n"}, "<C-k>", "<cmd>KittyNavigateUp<cr>")
 keymap({"n"}, "<C-j>", "<cmd>KittyNavigateDown<cr>")
 keymap({"n"}, "<C-l>", "<cmd>KittyNavigateRight<cr>")
+
+-- For MacOS
+keymap({"n"}, "<D-h>", "<cmd>KittyNavigateLeft<cr>")
+keymap({"n"}, "<D-k>", "<cmd>KittyNavigateUp<cr>")
+keymap({"n"}, "<D-j>", "<cmd>KittyNavigateDown<cr>")
+keymap({"n"}, "<D-l>", "<cmd>KittyNavigateRight<cr>")
 -- keymap({"n", "t"}, "<C-h>", "<C-w>h")
 -- keymap({"n", "t"}, "<C-k>", "<C-w>k")
 -- keymap({"n", "t"}, "<C-j>", "<C-w>j")
