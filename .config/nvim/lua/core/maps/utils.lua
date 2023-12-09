@@ -33,11 +33,11 @@ keymap({"n", "x", "o"}, "n", "'nN'[v:searchforward]")
 keymap({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
 
 -- File Explorer NETRW
-keymap("n", "<leader>e", "<cmd>Ex<cr>")
+keymap("n", "<leader>ee", "<cmd>Ex<cr>")
 
 -- Close buffer
 keymap("n", "<leader>qw", "<cmd>bd<cr>")
-keymap("n", "<leader>qwf", "<cmd>bd!<cr>")
+-- keymap("n", "<leader>qwf", "<cmd>bd!<cr>")
 
 -- GitSigns git blame
 keymap("n", "gb", "<cmd>Gitsigns blame_line<cr>")
