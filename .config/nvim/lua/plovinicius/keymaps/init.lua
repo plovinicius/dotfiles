@@ -61,7 +61,7 @@ end)
 nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 
 -- Map Oil to <leader>e
-nnoremap("<leader>e", function()
+nnoremap("<leader>fe", function()
 	require("oil").toggle_float()
 end)
 
@@ -267,7 +267,7 @@ nnoremap("<leader>sc", function()
 	}))
 end, { desc = "[S]earch [C]ommands" })
 
-nnoremap("<leader>/", function()
+nnoremap("<leader>ff", function()
 	require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 		previewer = false,
 	}))
@@ -329,7 +329,7 @@ nnoremap("fO", require("ufo").closeAllFolds)
 
 -- Insert --
 -- Map jj to <esc>
-inoremap("jj", "<esc>")
+inoremap("jk", "<esc>")
 
 -- Visual --
 -- Disable Space bar since it'll be used as the leader key
