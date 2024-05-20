@@ -54,6 +54,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Utils
 alias vim="nvim"
+alias vimc="nvim ~/.config/nvim"
 
 # Docker aliases
 alias dc="docker compose"
