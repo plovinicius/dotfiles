@@ -58,7 +58,7 @@ nnoremap("<C-h>", function()
 end)
 
 -- Swap between last two buffers
-nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
+nnoremap("<leader>`", "<C-^>", { desc = "Switch to last buffer" })
 
 -- Map Oil to <leader>e
 nnoremap("<leader>fe", function()
@@ -79,6 +79,23 @@ nnoremap("<C-o>", "<C-o>zz")
 nnoremap("%", "%zz")
 nnoremap("*", "*zz")
 nnoremap("#", "#zz")
+
+-- Reselect visual block after indent/outdent
+nnoremap(">", ">gv")
+nnoremap("<", "<gv")
+vnoremap(">", ">gv")
+vnoremap("<", "<gv")
+
+-- Window/screen navigation
+nnoremap("<S-Up>", "<cmd>resize +2<CR>")
+nnoremap("<S-Down>", "<cmd>resize -2<CR>")
+nnoremap("<S-Rigth>", "<cmd>vertical +2<CR>")
+nnoremap("<S-Left>", "<cmd>vertical -2<CR>")
+
+-- Window/screen split
+nnoremap("<leader>jj", "<cmd>split<Return><C-w>w<CR>")
+nnoremap("<leader>ll", "<cmd>vsplit<Return><C-w>w<CR>")
+nnoremap("<leader>kk", "<cmd>close<CR>")
 
 -- Press 'S' for quick find/replace for the word under the cursor
 nnoremap("S", function()
@@ -175,7 +192,7 @@ nnoremap("<leader>m", ":MaximizerToggle<cr>")
 nnoremap("<leader>=", "<C-w>=")
 
 -- Press leader f to format
-nnoremap("<leader>f", function()
+nnoremap("<leader>fl", function()
 	conform.format({ async = true, lsp_fallback = true })
 end, { desc = "Format the current buffer" })
 

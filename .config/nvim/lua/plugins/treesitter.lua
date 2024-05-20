@@ -25,11 +25,14 @@ return {
 					"tsx",
 					"typescript",
 					"vim",
+					"php",
+					"phpdoc",
 					-- "yaml", This is currently borked see: https://github.com/ikatyang/tree-sitter-yaml/issues/53
 				},
 				sync_install = false,
 				highlight = {
 					enable = true,
+					additional_vim_regex_highlighting = { "php" },
 				},
 				indent = {
 					enable = true,
