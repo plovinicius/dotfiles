@@ -183,7 +183,7 @@ end, { desc = "Format the current buffer" })
 nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
 
 -- Press gx to open the link under the cursor
-nnoremap("of", ":sil !open <cWORD><cr>", { silent = true })
+nnoremap("<leader>el", ":sil !open <cWORD><cr>", { silent = true })
 
 -- TSC autocommand keybind to run TypeScripts tsc
 nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })

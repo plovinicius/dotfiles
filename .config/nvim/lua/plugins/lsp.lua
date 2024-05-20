@@ -178,7 +178,7 @@ return {
 		opts = {
 			notify_on_error = false,
 			format_on_save = {
-				async = true,
+				-- async = true,
 				timeout_ms = 500,
 				lsp_fallback = true,
 			},
