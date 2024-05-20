@@ -1,0 +1,8 @@
+require("plovinicius.commands.highlight_yank")
+require("plovinicius.commands.toggle_eslint")
+require("plovinicius.commands.rotate_windows")
+require("plovinicius.commands.resize_windows")
+require("plovinicius.commands.vertical_help")
+require("plovinicius.commands.edit_text")
+require("plovinicius.commands.toggle_diagnostics")
+require("plovinicius.commands.copy_file_path_to_clipboard")
