@@ -3,7 +3,7 @@ vim.opt.nu = true
 vim.opt.rnu = true
 
 -- Disable showing the mode below the statusline
--- vim.opt.showmode = false
+vim.opt.showmode = false
 
 -- Set tabs to 2 spaces
 vim.opt.tabstop = 2
@@ -80,4 +80,3 @@ vim.opt.guicursor = {
 	"sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with specific blinking settings
 }
 
--- vim.cmd("autocmd!")

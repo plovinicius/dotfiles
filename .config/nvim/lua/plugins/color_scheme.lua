@@ -23,14 +23,21 @@ return {
 					treesitter = true,
 					treesitter_context = true,
 				},
+				custom_highlights = function()
+					return {
+						-- Diff colors for spectre
+						DiffChange = { fg = "#BD93F9" },
+						DiffDelete = { fg = "#FF5555" },
+					}
+				end,
 			})
 
 			vim.cmd.colorscheme("catppuccin-macchiato")
 
 			-- Hide all semantic highlights until upstream issues are resolved (https://github.com/catppuccin/nvim/issues/480)
-			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-				vim.api.nvim_set_hl(0, group, {})
-			end
+			-- for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+			-- 	vim.api.nvim_set_hl(0, group, {})
+			-- end
 		end,
 	},
 }
