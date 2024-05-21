@@ -170,6 +170,10 @@ nnoremap("<C-.>", function()
 	})
 end)
 
+-- When text is wrapped, move by terminal rows, not lines, unless a count is provided.
+nnoremap("k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
+nnoremap("j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
+
 -- Place all dignostics into a qflist
 nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
 
@@ -190,6 +194,14 @@ nnoremap("<leader>m", ":MaximizerToggle<cr>")
 
 -- Resize split windows to be equal size
 nnoremap("<leader>=", "<C-w>=")
+
+-- Paste replace visual selection without copying it.
+vnoremap("p", '"_dP')
+
+-- Maintain the cursor position when yanking a visual selection.
+-- http://ddrscott.github.io/blog/2016/yank-without-jank/
+vnoremap("y", "myy`y")
+vnoremap("Y", "myY`y")
 
 -- Press leader f to format
 nnoremap("<leader>fl", function()
