@@ -118,7 +118,44 @@ return {
 					},
 				},
 				yamlls = {},
-				phpactor = {
+			}
+
+			local formatters = {
+				prettierd = {},
+				stylua = {},
+			}
+
+			local manually_installed_servers = { "" }
+
+			local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
+
+			local ensure_installed = vim.tbl_filter(function(name)
+				return not vim.tbl_contains(manually_installed_servers, name)
+			end, mason_tools_to_install)
+
+			require("mason-tool-installer").setup({
+				auto_update = true,
+				run_on_start = true,
+				start_delay = 3000,
+				debounce_hours = 12,
+				ensure_installed = ensure_installed,
+			})
+
+			-- Iterate over our servers and set them up
+			for name, config in pairs(servers) do
+				require("lspconfig")[name].setup({
+					cmd = config.cmd,
+					capabilities = capabilities,
+					filetypes = config.filetypes,
+					handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
+					on_attach = on_attach,
+					settings = config.settings,
+					root_dir = config.root_dir,
+				})
+			end
+
+			require("lspconfig").intelephense.setup({
+				intelephense = {
 					settings = {
 						stubs = {
 							"apache",
@@ -209,41 +246,19 @@ return {
 						},
 					},
 				},
-			}
-
-			local formatters = {
-				prettierd = {},
-				stylua = {},
-			}
-
-			local manually_installed_servers = { "" }
-
-			local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
-
-			local ensure_installed = vim.tbl_filter(function(name)
-				return not vim.tbl_contains(manually_installed_servers, name)
-			end, mason_tools_to_install)
-
-			require("mason-tool-installer").setup({
-				auto_update = true,
-				run_on_start = true,
-				start_delay = 3000,
-				debounce_hours = 12,
-				ensure_installed = ensure_installed,
+				commands = {
+					IntelephenseIndex = {
+						function()
+							vim.lsp.buf.execute_command({ command = "intelephense.index.workspace" })
+						end,
+					},
+				},
+				on_attach = function(client, bufnr)
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+				end,
+				capabilities = capabilities,
 			})
-
-			-- Iterate over our servers and set them up
-			for name, config in pairs(servers) do
-				require("lspconfig")[name].setup({
-					cmd = config.cmd,
-					capabilities = capabilities,
-					filetypes = config.filetypes,
-					handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
-					on_attach = on_attach,
-					settings = config.settings,
-					root_dir = config.root_dir,
-				})
-			end
 
 			-- Setup mason so it can manage 3rd party LSP servers
 			require("mason").setup({
