@@ -118,10 +118,9 @@ return {
 					},
 				},
 				yamlls = {},
-				phpactor = {
+				intelephense = {
 					settings = {
-						phpactor = {
-							-- Add wordpress to the list of stubs
+						intelephense = {
 							stubs = {
 								"apache",
 								"bcmath",
@@ -195,14 +194,24 @@ return {
 								"zip",
 								"zlib",
 								"wordpress",
+								"wordpress-stubs",
+								"woocommerce",
+								"woocommerce-stubs",
+								"acf-pro",
+								"wordpress-globals",
+								"wp-cli",
 								"phpunit",
 							},
 							diagnostics = {
 								enable = true,
 							},
+							files = {
+								maxSize = 5000000,
+							},
 						},
 					},
 				},
+				phpactor = {},
 			}
 
 			local formatters = {
