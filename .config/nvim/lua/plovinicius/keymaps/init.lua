@@ -284,7 +284,7 @@ end, { desc = "Search [G]it [F]iles" })
 -- Telescope keybinds --
 nnoremap("<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
 nnoremap("<leader>fk", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
-nnoremap("<C-p>", function()
+nnoremap("<leader>fp", function()
 	require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
