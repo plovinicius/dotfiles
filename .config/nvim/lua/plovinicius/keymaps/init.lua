@@ -203,7 +203,7 @@ vnoremap("p", '"_dP')
 vnoremap("y", "myy`y")
 vnoremap("Y", "myY`y")
 
--- Press leader f to format
+-- Press leader fl to format
 nnoremap("<leader>fl", function()
 	conform.format({ async = true, lsp_fallback = true })
 end, { desc = "Format the current buffer" })
@@ -283,8 +283,8 @@ end, { desc = "Search [G]it [F]iles" })
 
 -- Telescope keybinds --
 nnoremap("<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-nnoremap("<leader>sb", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
-nnoremap("<leader>sf", function()
+nnoremap("<leader>fk", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
+nnoremap("<C-p>", function()
 	require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
