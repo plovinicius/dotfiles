@@ -5,10 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export GOROOT=$HOME/go
+export GOBIN=$GOROOT/bin
+export PATH=$PATH:$GOROOT:$GOBIN
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
-# export PATH="/usr/local/bin:/usr/bin"
 
 autoload -Uz compinit && compinit
 
@@ -32,7 +34,7 @@ zinit snippet OMZP::rust
 zinit snippet OMZP::command-not-found
 
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
+# zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -55,6 +57,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # Utils
 alias vim="nvim"
 alias vimc="nvim ~/.config/nvim"
+alias cls="clear"
 
 # Docker aliases
 alias dc="docker compose"
