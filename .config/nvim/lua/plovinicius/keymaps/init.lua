@@ -58,7 +58,7 @@ nnoremap("<C-h>", function()
 end)
 
 -- Swap between last two buffers
-nnoremap("<leader>`", "<C-^>", { desc = "Switch to last buffer" })
+-- nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 
 -- Map Oil to <leader>e
 nnoremap("<leader>fe", function()
@@ -115,15 +115,6 @@ nnoremap("<leader>sw", function()
 	require("spectre").open_visual({ select_word = true })
 end, { desc = "Search current word" })
 
--- Press 'H', 'L' to jump to start/end of a line (first/last char)
-nnoremap("L", "$")
-nnoremap("H", "^")
-
--- Press 'U' for redo
-nnoremap("U", "<C-r>")
-
--- Turn off highlighted results
-nnoremap("<leader>no", "<cmd>noh<cr>")
 
 -- Diagnostics
 
@@ -178,16 +169,16 @@ nnoremap("j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
 
 -- Navigate to next qflist item
-nnoremap("<leader>cn", ":cnext<cr>zz")
+nnoremap("<leader>cj", ":cnext<cr>zz")
 
 -- Navigate to previos qflist item
-nnoremap("<leader>cp", ":cprevious<cr>zz")
+nnoremap("<leader>ck", ":cprevious<cr>zz")
 
 -- Open the qflist
 nnoremap("<leader>co", ":copen<cr>zz")
 
 -- Close the qflist
-nnoremap("<leader>cc", ":cclose<cr>zz")
+nnoremap("<leader>cw", ":cclose<cr>zz")
 
 -- Map MaximizerToggle (szw/vim-maximizer) to leader-m
 nnoremap("<leader>m", ":MaximizerToggle<cr>")
@@ -212,10 +203,7 @@ end, { desc = "Format the current buffer" })
 nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
 
 -- Press gx to open the link under the cursor
-nnoremap("<leader>el", ":sil !open <cWORD><cr>", { silent = true })
-
--- TSC autocommand keybind to run TypeScripts tsc
-nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
+nnoremap("<leader>gl", ":sil !open <cWORD><cr>", { silent = true })
 
 -- Harpoon keybinds --
 -- Open harpoon ui
@@ -229,7 +217,7 @@ nnoremap("<leader>ha", function()
 end)
 
 -- Remove current file from harpoon
-nnoremap("<leader>hr", function()
+nnoremap("<leader>hd", function()
 	harpoon_mark.rm_file()
 end)
 
@@ -260,7 +248,7 @@ nnoremap("<leader>5", function()
 end)
 
 -- Git keymaps --
-nnoremap("<leader>gb", ":Gitsigns toggle_current_line_blame<cr>")
+nnoremap("<leader>gg", ":Gitsigns toggle_current_line_blame<cr>")
 nnoremap("<leader>gf", function()
 	local cmd = {
 		"sort",
@@ -283,8 +271,8 @@ end, { desc = "Search [G]it [F]iles" })
 
 -- Telescope keybinds --
 nnoremap("<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-nnoremap("<leader>fk", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
-nnoremap("<leader>fp", function()
+nnoremap("<leader>lb", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
+nnoremap("<C-p>", function()
 	require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
@@ -356,6 +344,35 @@ nnoremap("<leader>so", ":SymbolsOutline<cr>")
 nnoremap("fo", require("ufo").openAllFolds)
 nnoremap("fO", require("ufo").closeAllFolds)
 
+-- Press 'H', 'L' to jump to start/end of a line (first/last char)
+nnoremap("L", "$")
+nnoremap("H", "^")
+vnoremap("L", "$")
+vnoremap("H", "^")
+
+-- Press 'U' for redo
+nnoremap("U", "<C-r>")
+
+-- Turn off highlighted results
+nnoremap("<C-c>", "<cmd>noh<cr>")
+inoremap("<C-c>", "<cmd>noh<cr>")
+
+-- Increment/decrement
+nnoremap("+", "<C-a>")
+nnoremap("-", "<C-x>")
+
+-- Disabled recording macro key
+nnoremap("q", "<Nop>")
+
+-- Change macro key
+nnoremap("Q", "q")
+
+-- Save file
+nnoremap("<C-s>", "<cmd>w<cr><esc>")
+
+-- Close current buffer
+nnoremap("<leader>qw", "<cmd>bd<cr>")
+
 -- Map jj to <esc>
 inoremap("jk", "<esc>")
 
@@ -366,25 +383,23 @@ nnoremap("<S-Enter>", "O<Esc>")
 -- Map C-c to <esc> in insert mode
 inoremap("<C-c>", "<esc>")
 
--- Disable Space bar since it'll be used as the leader key
-vnoremap("<space>", "<nop>")
-
--- Press 'H', 'L' to jump to start/end of a line (first/last char)
-vnoremap("L", "$<left>")
-vnoremap("H", "^")
 --
 -- Delete but not put in the undo buffer
 nnoremap("x", '"_x')
+
 nnoremap("d", '"_d')
 vnoremap("d", '"_d')
 xnoremap("d", '"_d')
+
 nnoremap("D", '"_D')
 vnoremap("D", '"_D')
 xnoremap("D", '"_D')
 
---- Keeps current visual block selection after indent with "<" or ">"
-vnoremap(">", ">gv")
-vnoremap("<", "<gv")
+nnoremap("c", '"_c')
+vnoremap("c", '"_c')
+
+nnoremap("C", '"_C')
+vnoremap("C", '"_C')
 
 -- Terminal --
 -- Enter normal mode while in a terminal
