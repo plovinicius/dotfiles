@@ -213,7 +213,7 @@ return {
 							"polylang-stubs",
 						},
 						environment = {
-							includePaths = { "/home/plovinicius/.config/composer/vendor/php-stubs/" },
+							includePaths = { "/Users/ppinhe01/.composer/vendor/php-stubs/", "/Users/ppinhe01/.composer/vendor/wpsyntex/" },
 						},
 						diagnostics = {
 							enable = true,

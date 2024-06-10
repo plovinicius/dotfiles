@@ -54,51 +54,119 @@ return {
         end
       end
 
+local get_color = require'lualine.utils.utils'.extract_highlight_colors
       require("lualine").setup({
         options = {
           theme = "catppuccin",
           globalstatus = true,
-          -- component_separators = { left = "", right = "" },
+          icons_enabled = true,
           section_separators = { left = "█", right = "█" },
         },
-        sections = {
-          lualine_a = { "mode" },
-          lualine_b = {},
-          lualine_c = {
+    sections = {
+        lualine_a = {
             {
-              'b:gitsigns_head',
-              icon = ''
-            },
-            {
-              'diff',
-              icon = '',
-              source = diff_source
-            },
-            { 'filename', path = 1 },
-            {
-              harpoon_component()
-            },
-            {
-              'lsp_progress',
-              display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
-              spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                'mode',
+                fmt = string.upper
             }
-          },
-          lualine_x = { 'filetype' },
-          lualine_y = {
-            {
-              'diagnostics',
-              symbols = {
-                error = '󰅙 ',
-                warn = ' ',
-                info = ' ',
-                hint = ' '
-              },
-              colored = true,
-            }
-          },
-          lualine_z = {},
         },
+        lualine_b = {},
+        lualine_c = {
+            {
+                'b:gitsigns_head',
+                icon = ''
+            },
+            {
+                'diff',
+                icon = '',
+                source = diff_source
+            },
+            {
+                'lsp_progress',
+                display_components = {'lsp_client_name', 'spinner', {'title', 'percentage', 'message'}},
+                spinner_symbols = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'},
+            }
+        },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {
+            {
+                'diagnostics',
+                symbols = {
+                    error = ' ',
+                    warn = ' ',
+                    info = ' ',
+                    hint = ' '
+                },
+                colored = true,
+                diagnostics_color = {
+                    error = {
+                        fg = get_color("DiagnosticSignError", "fg")
+                    },
+                    warn = {
+                        fg = get_color("DiagnosticSignWarn", "fg")
+                    },
+                    info = {
+                        fg = get_color("DiagnosticSignInfo", "fg")
+                    },
+                    hint = {
+                        fg = get_color("DiagnosticSignHint", "fg")
+                    },
+                },
+            }
+        }
+    },
+    tabline = {
+        lualine_a = {'buffers'},
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {
+            {
+                'aerial',
+                sep = ' | '
+            },
+            'filetype'
+        },
+        lualine_z = {'location'}
+    },
+        -- sections = {
+        --   lualine_a = { "mode" },
+        --   lualine_b = {},
+        --   lualine_c = {
+        --     {
+        --       'b:gitsigns_head',
+        --       icon = ''
+        --     },
+        --     {
+        --       'diff',
+        --       icon = '',
+        --       source = diff_source
+        --     },
+        --     { 'filename', path = 1 },
+        --     {
+        --       harpoon_component()
+        --     },
+        --     {
+        --       'lsp_progress',
+        --       display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
+        --       spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+        --     }
+        --   },
+        --   lualine_x = { 'filetype' },
+        --   lualine_y = {
+        --     {
+        --       'diagnostics',
+        --       symbols = {
+        --         error = '󰅙 ',
+        --         warn = ' ',
+        --         info = ' ',
+        --         hint = ' '
+        --       },
+        --       colored = true,
+        --     }
+        --   },
+        --   lualine_z = {},
+        -- },
       })
     end,
   },
