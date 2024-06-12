@@ -419,10 +419,14 @@ xnoremap("C", '"_C')
 inoremap("(", "()<left>")
 inoremap("[", "[]<left>")
 inoremap("{", "{}<left>")
-inoremap("{<CR>", "{<CR>}<ESC>0")
-inoremap("{;<CR>", "{<CR>};<ESC>0")
+inoremap("{<CR>", "{<CR>}<ESC>")
+inoremap("{;<CR>", "{<CR>};<ESC>")
 inoremap('"', '""<left>')
 inoremap("'", "''<left>")
+
+-- switch between buffers
+nnoremap("<C-u>", "<cmd>bprevious<cr>")
+nnoremap("<C-i>", "<cmd>bnext<cr>")
 
 -- Terminal --
 -- Enter normal mode while in a terminal
