@@ -104,6 +104,12 @@ nnoremap("S", function()
 	vim.api.nvim_feedkeys(keys, "n", false)
 end)
 
+vnoremap("S", function()
+	local cmd = ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>"
+	local keys = vim.api.nvim_replace_termcodes(cmd, true, false, true)
+	vim.api.nvim_feedkeys(keys, "n", false)
+end)
+
 -- Open Spectre for global find/replace
 nnoremap("<leader>S", function()
 	require("spectre").toggle()
@@ -115,6 +121,9 @@ nnoremap("<leader>sw", function()
 	require("spectre").open_visual({ select_word = true })
 end, { desc = "Search current word" })
 
+vnoremap("<leader>sw", function()
+	require("spectre").open_visual({ select_word = true })
+end, { desc = "Search current word" })
 
 -- Diagnostics
 
@@ -298,7 +307,7 @@ end, { desc = "[S]earch [S]pelling suggestions" })
 
 -- LSP Keybinds (exports a function to be used in ../../after/plugin/lsp.lua b/c we need a reference to the current buffer) --
 M.map_lsp_keybinds = function(buffer_number)
-	nnoremap("<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]e[n]ame", buffer = buffer_number })
+	nnoremap("<leader>re", vim.lsp.buf.rename, { desc = "LSP: [R]e[n]ame", buffer = buffer_number })
 	nnoremap("<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ction", buffer = buffer_number })
 
 	nnoremap("gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition", buffer = buffer_number })
@@ -383,6 +392,9 @@ nnoremap("<S-Enter>", "O<Esc>")
 -- Map C-c to <esc> in insert mode
 inoremap("<C-c>", "<esc>")
 
+-- Rename highlighted text
+vnoremap("<C-r>", '"hy:%s/<C-r>h//g<left><left>')
+
 --
 -- Delete but not put in the undo buffer
 nnoremap("x", '"_x')
@@ -397,9 +409,20 @@ xnoremap("D", '"_D')
 
 nnoremap("c", '"_c')
 vnoremap("c", '"_c')
+xnoremap("c", '"_c')
 
 nnoremap("C", '"_C')
 vnoremap("C", '"_C')
+xnoremap("C", '"_C')
+
+-- auto pair tag
+inoremap("(", "()<left>")
+inoremap("[", "[]<left>")
+inoremap("{", "{}<left>")
+inoremap("{<CR>", "{<CR>}<ESC>0")
+inoremap("{;<CR>", "{<CR>};<ESC>0")
+inoremap('"', '""<left>')
+inoremap("'", "''<left>")
 
 -- Terminal --
 -- Enter normal mode while in a terminal

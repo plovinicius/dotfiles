@@ -4,6 +4,7 @@ return {
 		"catppuccin/nvim",
 		config = function()
 			require("catppuccin").setup({
+				no_bold = true,
 				integrations = {
 					cmp = true,
 					fidget = true,

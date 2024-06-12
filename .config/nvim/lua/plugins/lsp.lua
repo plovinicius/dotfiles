@@ -213,7 +213,10 @@ return {
 							"polylang-stubs",
 						},
 						environment = {
-							includePaths = { "/Users/ppinhe01/.composer/vendor/php-stubs/", "/Users/ppinhe01/.composer/vendor/wpsyntex/" },
+							includePaths = {
+								"/Users/ppinhe01/.composer/vendor/php-stubs/",
+								"/Users/ppinhe01/.composer/vendor/wpsyntex/",
+							},
 						},
 						diagnostics = {
 							enable = true,
@@ -264,7 +267,6 @@ return {
 		opts = {
 			notify_on_error = false,
 			format_on_save = {
-				-- async = true,
 				timeout_ms = 500,
 				lsp_fallback = true,
 			},
@@ -273,6 +275,11 @@ return {
 				typescript = { { "prettierd", "prettier" } },
 				typescriptreact = { { "prettierd", "prettier" } },
 				lua = { "stylua" },
+				-- php = { "phpcbf", "php_cs_fixer" },
+				["*"] = {
+					"typos",
+					"trim_whitespace",
+				},
 			},
 		},
 	},
