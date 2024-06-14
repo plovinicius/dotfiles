@@ -86,6 +86,13 @@ nnoremap("<", "<gv")
 vnoremap(">", ">gv")
 vnoremap("<", "<gv")
 
+-- Tabs in visual mode
+vnoremap("<S-Tab>", "<gv")
+vnoremap("<Tab>", ">gv")
+
+-- Cut in visual mode, which means yank and delete
+vnoremap("x", "ygvd")
+
 -- Window/screen navigation
 nnoremap("<S-Up>", "<cmd>resize +2<CR>")
 nnoremap("<S-Down>", "<cmd>resize -2<CR>")
@@ -173,6 +180,13 @@ end)
 -- When text is wrapped, move by terminal rows, not lines, unless a count is provided.
 nnoremap("k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 nnoremap("j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
+
+-- move lines
+vnoremap("K", ":m '<-2<CR>gv=gv")
+vnoremap("J", ":m '>+1<CR>gv=gv")
+
+-- Inverse tab in insert mode
+inoremap("<S-Tab>", "<C-d>")
 
 -- Place all dignostics into a qflist
 nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
@@ -419,10 +433,14 @@ xnoremap("C", '"_C')
 inoremap("(", "()<left>")
 inoremap("[", "[]<left>")
 inoremap("{", "{}<left>")
-inoremap("{<CR>", "{<CR>}<ESC>0")
-inoremap("{;<CR>", "{<CR>};<ESC>0")
+inoremap("{<CR>", "{<CR>}<ESC>")
+inoremap("{;<CR>", "{<CR>};<ESC>")
 inoremap('"', '""<left>')
 inoremap("'", "''<left>")
+
+-- switch between buffers
+-- nnoremap("<C-u>", "<cmd>bprevious<cr>")
+nnoremap("<C-i>", "<cmd>bnext<cr>")
 
 -- Terminal --
 -- Enter normal mode while in a terminal
