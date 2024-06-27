@@ -159,8 +159,8 @@ return {
 			end
 
 			require("lspconfig").intelephense.setup({
-				intelephense = {
-					settings = {
+				settings = {
+					intelephense = {
 						stubs = {
 							"bcmath",
 							"bz2",
@@ -210,7 +210,6 @@ return {
 							"wordpress-globals",
 							"wp-cli-stubs",
 							"genesis-stubs",
-							"polylang-stubs",
 						},
 						environment = {
 							includePaths = {

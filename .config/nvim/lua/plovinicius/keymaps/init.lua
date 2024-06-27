@@ -385,10 +385,9 @@ nnoremap("+", "<C-a>")
 nnoremap("-", "<C-x>")
 
 -- Disabled recording macro key
-nnoremap("q", "<Nop>")
-
 -- Change macro key
-nnoremap("Q", "q")
+-- nnoremap("q", "<Nop>")
+-- nnoremap("Q", "q")
 
 -- Save file
 nnoremap("<C-s>", "<cmd>w<cr><esc>")
@@ -404,7 +403,7 @@ nnoremap("<Enter>", "o<Esc>")
 nnoremap("<S-Enter>", "O<Esc>")
 
 -- Map C-c to <esc> in insert mode
-inoremap("<C-c>", "<esc>")
+inoremap("<C-c>", "<esc><esc>")
 
 -- Rename highlighted text
 vnoremap("<C-r>", '"hy:%s/<C-r>h//g<left><left>')
@@ -429,14 +428,17 @@ nnoremap("C", '"_C')
 vnoremap("C", '"_C')
 xnoremap("C", '"_C')
 
+-- Copy current file path to clipboard
+nnoremap("<leader>%", "<cmd>let @+=expand('%')<cr>", { silent = true })
+
 -- auto pair tag
-inoremap("(", "()<left>")
-inoremap("[", "[]<left>")
-inoremap("{", "{}<left>")
-inoremap("{<CR>", "{<CR>}<ESC>")
-inoremap("{;<CR>", "{<CR>};<ESC>")
-inoremap('"', '""<left>')
-inoremap("'", "''<left>")
+-- inoremap("(", "()<left>")
+-- inoremap("[", "[]<left>")
+-- inoremap("{", "{}<left>")
+-- inoremap("{<CR>", "{<CR>}<ESC>")
+-- inoremap("{;<CR>", "{<CR>};<ESC>")
+-- inoremap('"', '""<left>')
+-- inoremap("'", "''<left>")
 
 -- switch between buffers
 -- nnoremap("<C-u>", "<cmd>bprevious<cr>")
