@@ -294,7 +294,7 @@ end, { desc = "Search [G]it [F]iles" })
 
 -- Telescope keybinds --
 nnoremap("<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-nnoremap("<leader>lb", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
+nnoremap("<C-b>", require("telescope.builtin").buffers, { desc = "[S]earch Open [B]uffers" })
 nnoremap("<C-p>", function()
 	require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "[S]earch [F]iles" })
@@ -334,7 +334,7 @@ M.map_lsp_keybinds = function(buffer_number)
 	)
 
 	nnoremap(
-		"gi",
+		"<leader>gi",
 		require("telescope.builtin").lsp_implementations,
 		{ desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number }
 	)
@@ -353,7 +353,7 @@ M.map_lsp_keybinds = function(buffer_number)
 
 	-- See `:help K` for why this keymap
 	nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
-	nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+	nnoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 
 	-- Lesser used LSP functionality
 	nnoremap("gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number })
@@ -386,14 +386,11 @@ nnoremap("-", "<C-x>")
 
 -- Disabled recording macro key
 -- Change macro key
--- nnoremap("q", "<Nop>")
--- nnoremap("Q", "q")
+nnoremap("q", "<Nop>")
+nnoremap("Q", "q")
 
 -- Save file
 nnoremap("<C-s>", "<cmd>w<cr><esc>")
-
--- Close current buffer
-nnoremap("<leader>qw", "<cmd>bd<cr>")
 
 -- Map jj to <esc>
 inoremap("jk", "<esc>")
@@ -431,18 +428,13 @@ xnoremap("C", '"_C')
 -- Copy current file path to clipboard
 nnoremap("<leader>%", "<cmd>let @+=expand('%')<cr>", { silent = true })
 
--- auto pair tag
--- inoremap("(", "()<left>")
--- inoremap("[", "[]<left>")
--- inoremap("{", "{}<left>")
--- inoremap("{<CR>", "{<CR>}<ESC>")
--- inoremap("{;<CR>", "{<CR>};<ESC>")
--- inoremap('"', '""<left>')
--- inoremap("'", "''<left>")
+-- Close current buffer
+nnoremap("<leader>w", "<cmd>bd<cr>")
+nnoremap("<A-w>", "<cmd>bd<cr>")
 
 -- switch between buffers
--- nnoremap("<C-u>", "<cmd>bprevious<cr>")
-nnoremap("<C-i>", "<cmd>bnext<cr>")
+nnoremap("<A-k>", "<cmd>bprevious<cr>")
+nnoremap("<A-j>", "<cmd>bnext<cr>")
 
 -- Terminal --
 -- Enter normal mode while in a terminal

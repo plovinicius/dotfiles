@@ -80,18 +80,21 @@ return {
 							icon = "",
 							source = diff_source,
 						},
+						{ "filename", path = 1 },
+						{
+							harpoon_component(),
+						},
 						{
 							"lsp_progress",
 							display_components = { "lsp_client_name", "spinner", { "title", "percentage", "message" } },
 							spinner_symbols = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
 						},
 					},
-					lualine_x = {},
-					lualine_y = {
+					lualine_x = {
 						{
 							"diagnostics",
 							symbols = {
-								error = " ",
+								error = " ",
 								warn = " ",
 								info = " ",
 								hint = " ",
@@ -113,13 +116,6 @@ return {
 							},
 						},
 					},
-					lualine_z = {},
-				},
-				tabline = {
-					lualine_a = { "buffers" },
-					lualine_b = {},
-					lualine_c = {},
-					lualine_x = {},
 					lualine_y = {
 						{
 							"aerial",
@@ -127,45 +123,13 @@ return {
 						},
 						"filetype",
 					},
-					lualine_z = { "location" },
+					lualine_z = { "%l:%c", "%p%%/%L" },
 				},
-				-- sections = {
-				--   lualine_a = { "mode" },
-				--   lualine_b = {},
-				--   lualine_c = {
-				--     {
-				--       'b:gitsigns_head',
-				--       icon = ''
-				--     },
-				--     {
-				--       'diff',
-				--       icon = '',
-				--       source = diff_source
-				--     },
-				--     { 'filename', path = 1 },
-				--     {
-				--       harpoon_component()
-				--     },
-				--     {
-				--       'lsp_progress',
-				--       display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
-				--       spinner_symbols = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-				--     }
-				--   },
-				--   lualine_x = { 'filetype' },
-				--   lualine_y = {
-				--     {
-				--       'diagnostics',
-				--       symbols = {
-				--         error = '󰅙 ',
-				--         warn = ' ',
-				--         info = ' ',
-				--         hint = ' '
-				--       },
-				--       colored = true,
-				--     }
-				--   },
-				--   lualine_z = {},
+				-- tabline = {
+				-- 	lualine_a = { "buffers" },
+				-- 	lualine_b = {},
+				-- 	lualine_c = {},
+				-- 	lualine_x = {},
 				-- },
 			})
 		end,

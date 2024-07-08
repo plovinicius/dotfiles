@@ -48,6 +48,20 @@ return {
 						"filename_first",
 					},
 				},
+				pickers = {
+					find_files = {
+						theme = "dropdown",
+						previewer = false,
+					},
+					oldfiles = {
+						theme = "dropdown",
+						previewer = false,
+					},
+					buffers = {
+						theme = "dropdown",
+						previewer = false,
+					},
+				},
 			})
 
 			-- Enable telescope fzf native, if installed
