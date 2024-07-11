@@ -7,7 +7,7 @@ fi
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH:$GOBIN:"${HOME}/.composer/vendor/squizlabs/php_codesniffer/bin"
+export PATH=$PATH:$GOPATH:$GOBIN:"${HOME}/.composer/vendor/squizlabs/php_codesniffer/bin:${HOME}.local/bin"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -49,7 +49,7 @@ source $ZSH/oh-my-zsh.sh
 
 source ~/.nvm/nvm.sh
 source ~/.zsh_profile
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -68,7 +68,14 @@ alias dcpsa="docker ps -a"
 alias dcrm="docker rm"
 alias dcc='docker container prune -f ; docker volume prune -f'
 
+## QMK
+alias qmkconfig="cd /home/plovinicius/qmk_firmware/keyboards/keebio/iris/keymaps/plovinicius"
+alias qmkcomp="qmk compile -kb keebio/iris/rev2 -km plovinicius"
+alias qmkflash="qmk flash -kb keebio/iris/rev2 -km plovinicius"
+
 # Exports
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
