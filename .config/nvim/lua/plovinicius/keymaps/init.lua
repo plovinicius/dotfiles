@@ -3,8 +3,6 @@ local vnoremap = require("plovinicius.keymaps.utils").vnoremap
 local inoremap = require("plovinicius.keymaps.utils").inoremap
 local tnoremap = require("plovinicius.keymaps.utils").tnoremap
 local xnoremap = require("plovinicius.keymaps.utils").xnoremap
-local harpoon_ui = require("harpoon.ui")
-local harpoon_mark = require("harpoon.mark")
 local conform = require("conform")
 local utils = require("plovinicius.utils")
 
@@ -94,15 +92,18 @@ vnoremap("<Tab>", ">gv")
 vnoremap("x", "ygvd")
 
 -- Window/screen navigation
-nnoremap("<S-Up>", "<cmd>resize +2<CR>")
-nnoremap("<S-Down>", "<cmd>resize -2<CR>")
-nnoremap("<S-Rigth>", "<cmd>vertical +2<CR>")
-nnoremap("<S-Left>", "<cmd>vertical -2<CR>")
+-- nnoremap("<S-Up>", "<cmd>resize +2<CR>")
+-- nnoremap("<S-Down>", "<cmd>resize -2<CR>")
+-- nnoremap("<S-Rigth>", "<cmd>vertical +2<CR>")
+-- nnoremap("<S-Left>", "<cmd>vertical -2<CR>")
 
 -- Window/screen split
-nnoremap("<leader>jj", "<cmd>split<Return><C-w>w<CR>")
-nnoremap("<leader>ll", "<cmd>vsplit<Return><C-w>w<CR>")
-nnoremap("<leader>kk", "<cmd>close<CR>")
+nnoremap("<C-w>j", "<cmd>split<Return><C-w>w<CR>")
+nnoremap("<C-w>l", "<cmd>vsplit<Return><C-w>w<CR>")
+nnoremap("<C-w>q", "<cmd>close<CR>")
+
+-- Resize split windows to be equal size
+-- nnoremap("<leader>=", "<C-w>=")
 
 -- Press 'S' for quick find/replace for the word under the cursor
 nnoremap("S", function()
@@ -206,9 +207,6 @@ nnoremap("<leader>cw", ":cclose<cr>zz")
 -- Map MaximizerToggle (szw/vim-maximizer) to leader-m
 nnoremap("<leader>m", ":MaximizerToggle<cr>")
 
--- Resize split windows to be equal size
-nnoremap("<leader>=", "<C-w>=")
-
 -- Paste replace visual selection without copying it.
 vnoremap("p", '"_dP')
 
@@ -227,48 +225,6 @@ nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
 
 -- Press gx to open the link under the cursor
 nnoremap("<leader>gl", ":sil !open <cWORD><cr>", { silent = true })
-
--- Harpoon keybinds --
--- Open harpoon ui
-nnoremap("<leader>he", function()
-	harpoon_ui.toggle_quick_menu()
-end)
-
--- Add current file to harpoon
-nnoremap("<leader>ha", function()
-	harpoon_mark.add_file()
-end)
-
--- Remove current file from harpoon
-nnoremap("<leader>hd", function()
-	harpoon_mark.rm_file()
-end)
-
--- Remove all files from harpoon
-nnoremap("<leader>hc", function()
-	harpoon_mark.clear_all()
-end)
-
--- Quickly jump to harpooned files
-nnoremap("<leader>1", function()
-	harpoon_ui.nav_file(1)
-end)
-
-nnoremap("<leader>2", function()
-	harpoon_ui.nav_file(2)
-end)
-
-nnoremap("<leader>3", function()
-	harpoon_ui.nav_file(3)
-end)
-
-nnoremap("<leader>4", function()
-	harpoon_ui.nav_file(4)
-end)
-
-nnoremap("<leader>5", function()
-	harpoon_ui.nav_file(5)
-end)
 
 -- Git keymaps --
 nnoremap("<leader>gg", ":Gitsigns toggle_current_line_blame<cr>")
@@ -356,16 +312,11 @@ M.map_lsp_keybinds = function(buffer_number)
 	nnoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 
 	-- Lesser used LSP functionality
-	nnoremap("gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number })
 	nnoremap("td", vim.lsp.buf.type_definition, { desc = "LSP: [T]ype [D]efinition", buffer = buffer_number })
 end
 
 -- Symbol Outline keybind
 nnoremap("<leader>so", ":SymbolsOutline<cr>")
-
--- nvim-ufo keybinds
-nnoremap("fo", require("ufo").openAllFolds)
-nnoremap("fO", require("ufo").closeAllFolds)
 
 -- Press 'H', 'L' to jump to start/end of a line (first/last char)
 nnoremap("L", "$")

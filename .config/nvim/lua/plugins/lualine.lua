@@ -3,7 +3,7 @@ return {
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		config = function()
-			local harpoon = require("harpoon.mark")
+			-- local harpoon = require("harpoon.mark")
 
 			vim.cmd([[
         set guioptions-=e " Use showtabline in gui vim
@@ -26,22 +26,20 @@ return {
 				end
 			end
 
-			local function harpoon_component()
-				local total_marks = harpoon.get_length()
-
-				if total_marks == 0 then
-					return ""
-				end
-
-				local current_mark = "—"
-
-				local mark_idx = harpoon.get_current_index()
-				if mark_idx ~= nil then
-					current_mark = tostring(mark_idx)
-				end
-
-				return string.format("󱡅 %s/%d", current_mark, total_marks)
-			end
+			-- local function harpoon_component()
+			-- 	local total_marks = harpoon.get_length()
+			--
+			-- 	if total_marks == 0 then
+			-- 		return ""
+			-- 	end
+			--
+			-- 	local current_mark = "—"
+			--
+			-- 	local mark_idx = harpoon.get_current_index()
+			-- 	if mark_idx ~= nil then
+			-- 		current_mark = tostring(mark_idx)
+			-- 	end
+			--
 
 			local function diff_source()
 				local gitsigns = vim.b.gitsigns_status_dict
@@ -81,9 +79,9 @@ return {
 							source = diff_source,
 						},
 						{ "filename", path = 1 },
-						{
-							harpoon_component(),
-						},
+						-- {
+						-- 	harpoon_component(),
+						-- },
 						{
 							"lsp_progress",
 							display_components = { "lsp_client_name", "spinner", { "title", "percentage", "message" } },
