@@ -1,0 +1,45 @@
+---
+description: Enhance any English text to improve readability, clarity, and conciseness with a casual tone. Provide language explanations for non-native English speakers.
+globs:
+alwaysApply: false
+---
+# Improve the following text
+
+## Description
+Enhance any English text to improve readability, clarity, and conciseness with a casual tone. Provide language explanations for non-native English speakers.
+
+## Prompt Template
+Improve the following text by:
+1. Making it more readable and concise
+2. Using casual language without jargon
+3. Identifying any language errors with explanations and examples
+4. Providing helpful hints to improve English usage
+
+{{selection}}
+
+## Examples
+### Example 1
+#### Input
+I would like to hereby inform you that our company has initiated the implementation of a new customer relationship management system which will facilitate enhanced communication between our staff members and clients.
+
+#### Output
+We're starting to use a new customer service system that will help our team communicate better with clients.
+
+**Language notes:**
+- "Hereby inform you" is formal language often used in legal documents. In casual conversation, simply say "let you know" or "tell you."
+- "Initiated the implementation" is wordier than needed. "Started using" or "introduced" works better.
+- "Facilitate enhanced communication" can be simplified to "help communicate better" or "improve communication."
+
+### Example 2
+#### Input
+The utilization of artificial intelligence technologies in contemporary business environments presents a multifaceted array of advantages and concomitant challenges.
+
+#### Output
+Using AI in today's businesses offers many benefits but also comes with challenges.
+
+**Language notes:**
+- "Utilization" is a formal word. In everyday English, simply use "use" or "using."
+- "Contemporary" can be replaced with "today's" or "modern" in casual conversation.
+- "Multifaceted array" is unnecessary jargon. "Many" or "several" works fine.
+- "Concomitant" is an advanced academic word. Use simpler alternatives like "related" or just say "also comes with."
+

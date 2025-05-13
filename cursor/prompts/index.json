@@ -1,0 +1,9 @@
+  {
+    "ruleMap": {
+      "mtb": "make-the-text-better.md",
+      "wp": "wordpress.md",
+      "pr": "github-pr.md",
+      "cm": "github-commit.md",
+      "rp": "rock-pitch.md"
+    }
+  }
