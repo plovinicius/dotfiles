@@ -87,7 +87,9 @@
     "**/node_modules": true,
     "**/vendor": true,
     "**/*.min.js": true,
-    "**/*.min.css": true
+    "**/*.min.css": true,
+    "**/dist": true,
+    "**/languages/**/*.php": true
   },
   //
   // Formatting Configuration
